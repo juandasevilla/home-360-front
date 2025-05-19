@@ -1,0 +1,9 @@
+<textarea
+  [id]="id"
+  [placeholder]="placeholder"
+  [rows]="rows"
+  [required]="required"
+  [disabled]="disabled"
+  [ngClass]="{'textarea': true, 'textarea--error': hasError}"
+  (input)="onTextareaChange($event)"
+>{{value}}</textarea>

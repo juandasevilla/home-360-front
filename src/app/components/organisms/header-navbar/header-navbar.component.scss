@@ -1,0 +1,29 @@
+@import 'src/styles/variables';
+
+.header {
+  width: 1440px;
+  height: 72px;
+  background-color: $color-white;
+  box-shadow: $box-shadow-light;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  
+  &__container {
+    width: 1248px;
+    height: 40px;
+    margin: 0 auto;
+    position: relative;
+    top: 16px;
+  }
+  
+  @media (max-width: 1440px) {
+    width: 100%;
+    
+    &__container {
+      width: calc(100% - 32px);
+      margin: 0 16px;
+    }
+  }
+}

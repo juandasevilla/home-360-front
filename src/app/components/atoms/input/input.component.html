@@ -1,0 +1,10 @@
+<input
+  [id]="id"
+  [type]="type"
+  [placeholder]="placeholder"
+  [required]="required"
+  [disabled]="disabled"
+  [value]="value"
+  [ngClass]="{'input': true, 'input--error': hasError}"
+  (input)="onInputChange($event)"
+/>

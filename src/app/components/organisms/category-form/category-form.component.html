@@ -1,0 +1,37 @@
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="category-form">
+  <!-- Campo Nombre -->
+  <app-form-field 
+    id="category-name"
+    label="Nombre de la Categoría"
+    [required]="true"
+    [errorMessage]="hasError('name') ? getErrorMessage('name') : ''">
+    <app-input
+      id="category-name"
+      formControlName="name"
+      placeholder="Ej. Residencial, Comercial, Industrial"
+      [required]="true"
+      [hasError]="hasError('name')">
+    </app-input>
+  </app-form-field>
+  
+  <!-- Campo Descripción -->
+  <app-form-field
+    id="category-description"
+    label="Descripción">
+    <app-textarea
+      id="category-description"
+      formControlName="description"
+      placeholder="Describe para qué se usa esta categoría..."
+      [rows]="4">
+    </app-textarea>
+  </app-form-field>
+  
+  <!-- Botón de crear -->
+  <div class="category-form__actions">
+    <app-button 
+      text="Crear Categoría"
+      type="submit"
+      [disabled]="categoryForm.invalid || isSubmitting">
+    </app-button>
+  </div>
+</form>

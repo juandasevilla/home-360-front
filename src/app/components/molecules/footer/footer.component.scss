@@ -1,0 +1,78 @@
+@import 'src/styles/variables';
+
+.footer-section {
+    font-family: $font-secondary;
+    font-size: 0.5rem;
+
+    &__title {
+        font-weight: 400;
+        margin-bottom: 1rem;
+        font-size: 0.75rem;
+        color: $color-black;
+    }
+
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__item {
+        margin-bottom: 0.5rem;
+        font-size: 0.75rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        &:hover {
+            color: $color-blue;
+            cursor: pointer;
+        }
+
+    }
+
+    &__icon {
+        font-size: 0.75rem;
+        width: 12px;
+        height: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+        &__title {
+            font-size: 1rem;
+        }
+
+        &__item {
+            font-size: 1rem;
+        }
+
+        &__icon {
+            width: 16px;
+            height: 16px;
+            font-size: 1rem;
+        }
+    }
+
+    &--social {
+        .footer-section__list {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .footer-section__item {
+            margin-bottom: 0;
+            font-size: 0;
+        }
+
+        .footer-section__icon {
+            width: 16px;
+            height: 16px;
+            font-size: 1rem;
+        }
+    }
+}

@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
-  styleUrls: ['./button.component.css']
+  styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent {
+  @Input() text!: string;
+  @Input() type: 'button' | 'submit' | 'reset' = 'button';
+  @Input() buttonStyle: 'primary' | 'secondary' = 'primary';
+  @Input() disabled = false;
+  @Output() buttonClick = new EventEmitter<void>();
 
+  onClick() {
+    this.buttonClick.emit();
+  }
 }
