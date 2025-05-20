@@ -1,0 +1,20 @@
+@import 'src/styles/variables';
+
+.sidebar {
+  width: 256px;
+  height: calc(100vh - 64px - 250px) ; // Para asegurar que ocupe toda la altura disponible menos el header
+  background-color: $color-white;
+  border-right: 1px solid $color-border-default;
+  position: fixed;
+  top: 64px; // Posicionado debajo del header
+  left: 0;
+  z-index: 90; // Menor que el z-index del header para que el header quede encima
+  overflow-y: auto; // Para permitir scroll si hay muchos items
+  
+  &__menu {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

@@ -1,0 +1,10 @@
+<aside class="sidebar">
+  <nav class="sidebar__menu">
+    <app-sidebar-item 
+      *ngFor="let item of menuItems"
+      [icon]="item.icon"
+      [title]="item.title"
+      [route]="item.route">
+    </app-sidebar-item>
+  </nav>
+</aside>

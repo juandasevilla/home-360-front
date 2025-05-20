@@ -1,1 +1,8 @@
-<p>button works!</p>
+<button 
+  class="button" 
+  [ngClass]="buttonStyle"
+  [type]="type" 
+  (click)="onClick()" 
+  [disabled]="disabled">
+  {{ text }}
+</button>

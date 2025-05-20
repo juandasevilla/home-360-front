@@ -1,0 +1,13 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; // Importante: esto hace que el contenedor ocupe al menos toda la ventana
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.main-content {
+  flex: 1; // Importante: esto hace que el main se expanda empujando el footer
+  min-height: 500px;
+}

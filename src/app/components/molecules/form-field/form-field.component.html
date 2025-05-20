@@ -1,0 +1,13 @@
+<div class="form-field">
+  <app-label [for]="id" [required]="required" *ngIf="label">
+    {{ label }}
+  </app-label>
+  
+  <div class="form-field__control">
+    <ng-content></ng-content>
+  </div>
+  
+  <div class="form-field__error" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+</div>

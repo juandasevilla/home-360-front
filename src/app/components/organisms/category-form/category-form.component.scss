@@ -1,0 +1,11 @@
+@import 'src/styles/variables';
+
+.category-form {
+  width: 100%;
+  
+  &__actions {
+    display: flex;
+    justify-content: flex-end; // Esto alineará el botón a la derecha
+    margin-top: 24px;
+  }
+}

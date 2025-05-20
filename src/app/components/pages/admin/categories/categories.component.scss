@@ -1,0 +1,54 @@
+@import 'src/styles/variables';
+
+.category {
+    padding: 0 2rem;
+    padding-bottom: 3rem;
+    box-sizing: border-box;
+
+    &__title {
+        font-size: 24px;
+        margin-bottom: 1rem;
+        font-family: $font-primary;
+        color: $color-text-primary;
+        font-weight: 400;
+    }
+
+    &__subtitle {
+        font-size: 18px;
+        margin-bottom: 1rem;
+        font-family: $font-tertiary;
+        color: $color-text-subtitle;
+        font-weight: 500;
+    }
+
+    &__table-container {
+        margin-bottom: 3rem;
+    }
+
+    @media (min-width: 768px) {
+        padding: 1rem 2rem;
+        padding-bottom: 3rem;
+
+        &__table-container {
+            margin-bottom: 5rem;
+        }
+    }
+}
+
+// Añadir los nuevos estilos para el formulario
+.categories-page {
+    &__content {
+        max-width: calc(100% - 3rem); // Cambiamos a max-width en lugar de width fijo
+        width: 100%; // Esto hará que se adapte al ancho disponible
+        margin: 0 auto; // Centrar el contenedor
+        border-radius: 8px;
+        border: 1px solid #E5E7EB;
+        background-color: $color-white;
+        padding: 32px; // Padding interno
+        box-shadow: $box-shadow-subtle;
+        
+        @media (max-width: 768px) {
+            padding: 16px; // Menor padding en pantallas pequeñas
+        }
+    }
+}

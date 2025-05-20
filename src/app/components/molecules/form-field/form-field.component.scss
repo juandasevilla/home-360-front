@@ -1,0 +1,32 @@
+@import 'src/styles/variables';
+
+.form-field {
+  margin-bottom: 24px;
+  
+  .form-field__label {
+    display: block;
+    margin-bottom: 8px;
+    font-family: $font-primary;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: $color-text-secondary;
+    
+    .form-field__required {
+      color: #EF4444 !important; // Usar valor directo para probar
+      margin-left: 4px;
+    }
+  }
+  
+  &__control {
+    margin-top: 8px;
+  }
+  
+  &__error {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #EF4444; // Usar valor directo para probar
+    font-family: $font-primary;
+  }
+}

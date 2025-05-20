@@ -1,0 +1,20 @@
+<div class="textarea">
+  <div class="textarea__wrapper">
+    <textarea
+      [id]="id"
+      [placeholder]="placeholder"
+      [rows]="rows"
+      [required]="required"
+      [disabled]="disabled"
+      [attr.maxlength]="maxLength"
+      [ngClass]="{
+        'textarea__field': true, 
+        'textarea__field--error': hasError
+      }"
+      (input)="onTextareaChange($event)"
+    >{{value}}</textarea>
+    <div *ngIf="showCharCount && maxLength" class="textarea__char-count">
+      {{currentLength}}/{{maxLength}}
+    </div>
+  </div>
+</div>

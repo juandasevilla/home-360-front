@@ -1,0 +1,19 @@
+<div class="navbar">
+  <div class="navbar__left">
+    <img [src]="logoSrc" [alt]="logoAlt" class="navbar__logo">
+  </div>
+  
+  <div class="navbar__right">
+    <div class="navbar__links">
+      <span *ngFor="let link of navLinks; let i = index" class="navbar__link-item">
+        <a [routerLink]="link.url" class="navbar__link">{{ link.text }}</a>
+      </span>
+    </div>
+    
+    <app-button 
+      [text]="buttonText" 
+      buttonStyle="primary" 
+      (buttonClick)="onButtonClick()">
+    </app-button>
+  </div>
+</div>

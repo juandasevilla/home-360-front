@@ -1,0 +1,17 @@
+@import 'src/styles/variables';
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: $font-primary;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0;
+  color: $color-text-secondary;
+  
+  &__required {
+    color: #EF4444 !important; 
+    margin-left: 4px;
+  }
+}

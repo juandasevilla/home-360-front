@@ -1,0 +1,47 @@
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="category-form">
+  <!-- Campo Nombre -->
+  <app-form-field 
+    id="category-name"
+    label="Nombre de la Categoría"
+    [required]="true"
+    [errorMessage]="hasError('name') ? getErrorMessage('name') : ''">
+    <app-input
+      id="category-name"
+      formControlName="name"
+      placeholder="Escriba el nombre de la categoría (máximo 50 caracteres)"
+      [required]="true"
+      [hasError]="hasError('name')"
+      [maxLength]="nameMaxLength"
+      [showCharCount]="true"
+      [currentLength]="nameMaxLength - nameCharsRemaining">
+    </app-input>
+  </app-form-field>
+  
+  <!-- Campo Descripción -->
+  <app-form-field
+    id="category-description"
+    label="Descripción"
+    [required]="true"
+    >
+    <app-textarea
+      id="category-description"
+      formControlName="description"
+      placeholder="Ingrese una descripción de la categoría (máximo 90 caracteres)"
+      [rows]="4"
+      [required]="true"
+      [hasError]="hasError('description')"
+      [maxLength]="descriptionMaxLength"
+      [showCharCount]="true"
+      [currentLength]="descriptionMaxLength - descriptionCharsRemaining">
+    </app-textarea>
+  </app-form-field>
+  
+  <!-- Botón de crear -->
+  <div class="category-form__actions">
+    <app-button 
+      text="Crear"
+      type="submit"
+      [disabled]="categoryForm.invalid || isSubmitting">
+    </app-button>
+  </div>
+</form>
