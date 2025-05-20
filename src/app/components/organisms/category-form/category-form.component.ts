@@ -11,7 +11,11 @@ import { Category } from 'src/app/shared/models/Category';
 export class CategoryFormComponent implements OnInit {
   categoryForm!: FormGroup;
   isSubmitting: boolean = false;
-  
+  nameMaxLength: number = 50;
+  descriptionMaxLength: number = 90;
+  nameCharsRemaining: number = this.nameMaxLength;
+  descriptionCharsRemaining: number = this.descriptionMaxLength;
+
   constructor(
     private fb: FormBuilder,
     private categoryService: CategoryServiceService
@@ -19,38 +23,85 @@ export class CategoryFormComponent implements OnInit {
   
   ngOnInit(): void {
     this.initForm();
+    this.setupCharCounters();
+  }
+
+  private setupCharCounters(): void {
+    // Controlar contador de caracteres de nombre
+    this.categoryForm.get('name')?.valueChanges.subscribe(value => {
+      this.nameCharsRemaining = this.nameMaxLength - (value?.length || 0);
+    });
+
+    // Controlar contador de caracteres de descripción
+    this.categoryForm.get('description')?.valueChanges.subscribe(value => {
+      this.descriptionCharsRemaining = this.descriptionMaxLength - (value?.length || 0);
+    });
   }
   
   private initForm(): void {
     this.categoryForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      description: ['']
+      name: ['', [Validators.required, Validators.maxLength(50)]],
+      description: ['', [Validators.required, Validators.maxLength(90)]]
     });
   }
   
   onSubmit(): void {
     if (this.categoryForm.invalid) {
+      // Marcar todos los campos como tocados para mostrar errores
+      Object.keys(this.categoryForm.controls).forEach(key => {
+        const control = this.categoryForm.get(key);
+        control?.markAsTouched();
+      });
       return;
     }
     
     this.isSubmitting = true;
-    const formData: Category = this.categoryForm.value;
     
-    this.categoryService.createCategory(formData).subscribe({
-      next: (newCategory) => {
-        console.log('Categoría creada con éxito:', newCategory);
+    // Obtener los valores del formulario
+    const categoryData: Category = {
+      name: this.categoryForm.value.name,
+      description: this.categoryForm.value.description
+    };
+    
+    // Llamar al servicio para crear la categoría
+    this.categoryService.createCategory(categoryData).subscribe({
+      next: (response) => {
+        console.log('Categoría creada exitosamente:', response);
         this.isSubmitting = false;
-        this.categoryForm.reset(); // Limpiar el formulario
-        // Podrías mostrar un mensaje de éxito aquí
+        this.resetForm();
+        // TODO: Mostrar mensaje de éxito o redireccionar
       },
       error: (error) => {
         console.error('Error al crear la categoría:', error);
         this.isSubmitting = false;
-        // Podrías mostrar un mensaje de error aquí
+        // TODO: Mostrar mensaje de error
       }
     });
   }
   
+  /**
+   * Limpia el formulario completamente, incluyendo estados de error
+   */
+  resetForm(): void {
+    this.categoryForm.reset();
+    // Eliminar el estado de error/tocado de todos los controles
+    Object.keys(this.categoryForm.controls).forEach(key => {
+      const control = this.categoryForm.get(key);
+      control?.setErrors(null);
+      control?.markAsUntouched();
+    });
+
+    // Resetear explícitamente los contadores de caracteres
+    this.nameCharsRemaining = this.nameMaxLength;
+    this.descriptionCharsRemaining = this.descriptionMaxLength;
+    
+    // Establecer valores vacíos explícitamente
+    this.categoryForm.patchValue({
+      name: '',
+      description: ''
+    });
+  }
+
   // Helper para las validaciones
   hasError(controlName: string): boolean {
     const control = this.categoryForm.get(controlName);
@@ -70,6 +121,10 @@ export class CategoryFormComponent implements OnInit {
     
     if (control.errors['minlength']) {
       return `Debe tener al menos ${control.errors['minlength'].requiredLength} caracteres`;
+    }
+
+    if (control.errors['maxlength']) {
+    return `Debe tener máximo ${control.errors['maxlength'].requiredLength} caracteres`; // Corregido
     }
     
     return 'Campo inválido';

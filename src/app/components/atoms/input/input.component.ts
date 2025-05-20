@@ -19,6 +19,10 @@ export class InputComponent implements ControlValueAccessor {
   @Input() type: string = 'text';
   @Input() required: boolean = false;
   @Input() hasError: boolean = false;
+  @Input() errorMessage: string = '';
+  @Input() maxLength?: number; // Nuevo input para límite
+  @Input() showCharCount: boolean = false; // Mostrar contador
+  @Input() currentLength: number = 0; // Contador actual
   
   value: string = '';
   disabled: boolean = false;

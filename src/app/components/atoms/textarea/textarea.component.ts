@@ -19,6 +19,10 @@ export class TextareaComponent {
   @Input() rows: number = 4;
   @Input() required: boolean = false;
   @Input() hasError: boolean = false;
+  @Input() maxLength?: number; // Nuevo input para límite
+  @Input() showCharCount: boolean = true; // Mostrar contador por defecto
+  @Input() currentLength: number = 0; // Contador actual
+
   
   value: string = '';
   disabled: boolean = false;
