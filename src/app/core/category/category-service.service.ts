@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/shared/models/Category';
+import { Page } from 'src/app/shared/models/Page';
+import { HttpParams } from '@angular/common/http';
 
 
 
@@ -20,7 +22,16 @@ export class CategoryServiceService {
   }
   
   // Si quieres agregar también el GET para listar categorías
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.apiUrl);
+  getCategories(page: number = 0, size: number = 10, orderAsc: boolean = false): Observable<Page<Category>> {
+    // URL corregida con "/page" agregado para la paginación
+    const paginationUrl = `${this.apiUrl}/page`;
+    
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('orderAsc', orderAsc.toString());
+      
+    console.log('Consultando categorías con URL:', paginationUrl);
+    return this.http.get<Page<Category>>(paginationUrl, { params });
   }
 }

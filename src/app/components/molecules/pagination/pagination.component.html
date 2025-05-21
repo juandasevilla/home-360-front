@@ -1,0 +1,31 @@
+<div class="pagination" *ngIf="totalPages > 1">
+  <div class="pagination__controls">
+    <!-- Botón para grupo anterior -->
+    <app-button
+      *ngIf="currentGroup > 0"
+      [text]="'<'"
+      [buttonStyle]="'secondary'"
+      [disabled]="loading"
+      (buttonClick)="previousGroup()">
+    </app-button>
+    
+    <!-- Botones de página del grupo actual -->
+    <ng-container *ngFor="let page of visiblePageButtons">
+      <app-button
+        [text]="(page + 1).toString()"
+        [buttonStyle]="page === currentPage ? 'pagination-active' : 'secondary'"
+        [disabled]="loading"
+        (buttonClick)="changePage(page)">
+      </app-button>
+    </ng-container>
+    
+    <!-- Botón para grupo siguiente -->
+    <app-button
+      *ngIf="(currentGroup + 1) * 4 < totalPages"
+      [text]="'>'"
+      [buttonStyle]="'secondary'"
+      [disabled]="loading"
+      (buttonClick)="nextGroup()">
+    </app-button>
+  </div>
+</div>
