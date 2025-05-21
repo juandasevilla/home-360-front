@@ -21,6 +21,9 @@ import { FormFieldComponent } from './components/molecules/form-field/form-field
 import { CategoryFormComponent } from './components/organisms/category-form/category-form.component';
 import { ReactiveFormsModule } from '@angular/forms';  
 import { HttpClientModule } from '@angular/common/http';
+import { DataTableComponent } from './components/molecules/data-table/data-table.component';
+import { PaginationComponent } from './components/molecules/pagination/pagination.component';
+import { CategoryTableComponent } from './components/organisms/category-table/category-table.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,10 @@ import { HttpClientModule } from '@angular/common/http';
     DashboardComponent,
     TextareaComponent,
     FormFieldComponent,
-    CategoryFormComponent
+    CategoryFormComponent,
+    DataTableComponent,
+    PaginationComponent,
+    CategoryTableComponent
   ],
   imports: [
     BrowserModule,

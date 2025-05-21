@@ -1,0 +1,27 @@
+<div class="data-table">
+  <table class="data-table__table">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns" [style.width]="column.width || 'auto'">
+          {{ column.header }}
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngIf="!loading">
+      <tr *ngFor="let item of data" (click)="onRowClick(item)" class="data-table__row">
+        <td *ngFor="let column of columns">
+          {{ getPropertyValue(item, column.key) }}
+        </td>
+      </tr>
+    </tbody>
+    
+    <tbody *ngIf="loading">
+      <tr>
+        <td [attr.colspan]="columns.length" class="data-table__loading">
+          <div class="data-table__spinner"></div>
+          Cargando...
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
