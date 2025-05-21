@@ -24,6 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { DataTableComponent } from './components/molecules/data-table/data-table.component';
 import { PaginationComponent } from './components/molecules/pagination/pagination.component';
 import { CategoryTableComponent } from './components/organisms/category-table/category-table.component';
+import { LocationsComponent } from './components/pages/admin/locations/locations.component';
+import { LocationFormComponent } from './components/organisms/location-form/location-form.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { CategoryTableComponent } from './components/organisms/category-table/ca
     CategoryFormComponent,
     DataTableComponent,
     PaginationComponent,
-    CategoryTableComponent
+    CategoryTableComponent,
+    LocationsComponent,
+    LocationFormComponent
   ],
   imports: [
     BrowserModule,
