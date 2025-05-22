@@ -26,6 +26,7 @@ import { PaginationComponent } from './components/molecules/pagination/paginatio
 import { CategoryTableComponent } from './components/organisms/category-table/category-table.component';
 import { LocationsComponent } from './components/pages/admin/locations/locations.component';
 import { LocationFormComponent } from './components/organisms/location-form/location-form.component';
+import { LocationTableComponent } from './components/organisms/location-table/location-table.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { LocationFormComponent } from './components/organisms/location-form/loca
     PaginationComponent,
     CategoryTableComponent,
     LocationsComponent,
-    LocationFormComponent
+    LocationFormComponent,
+    LocationTableComponent
   ],
   imports: [
     BrowserModule,

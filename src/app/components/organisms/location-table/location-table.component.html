@@ -1,0 +1,20 @@
+<div class="location-table">
+
+  <app-data-table
+    [columns]="columns"
+    [data]="locations"
+    [loading]="loading"
+    emptyMessage="No hay categorías disponibles."
+    (rowClick)="onCategorySelect($event)">
+  </app-data-table>
+  
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    [totalElements]="totalElements"
+    [pageSize]="pageSize"
+    [loading]="loading"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
+
+</div>

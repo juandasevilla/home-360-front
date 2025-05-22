@@ -28,7 +28,8 @@ export class LocationService {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
-      .set('orderAsc', orderAsc.toString());
+      .set('orderAsc', orderAsc.toString())
+      .set('name', '');
       
     return this.http.get<Page<Location>>(paginationUrl, { params });
   }
