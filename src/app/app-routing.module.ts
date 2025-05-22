@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from './components/layouts/admin-layout/admin-layout.component';
 import { DashboardComponent } from './components/pages/admin/dashboard/dashboard.component';
 import { CategoriesComponent } from './components/pages/admin/categories/categories.component';
+import { LocationsComponent } from './components/pages/admin/locations/locations.component';
 
 const routes: Routes = [
   
@@ -14,6 +15,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'categories', component: CategoriesComponent },
+      { path: 'location', component: LocationsComponent }, // Cambia esto por el componente correcto
       //{ path: 'properties', component: PropertiesComponent },
       //{ path: 'users', component: UsersComponent },
       //{ path: 'settings', component: SettingsComponent }

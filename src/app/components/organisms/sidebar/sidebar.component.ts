@@ -4,7 +4,8 @@ import {
   faLayerGroup, // Para Categorías
   faBuilding, // Para Propiedades
   faUsers, // Para Usuarios
-  faGear // Para Configuración
+  faGear, // Para Configuración
+  faLocationDot
 } from '@fortawesome/free-solid-svg-icons';
 import { SidebarMenuItem } from 'src/app/shared/models/SidebarMenuItem';
 
@@ -19,7 +20,8 @@ export class SidebarComponent {
     { icon: faLayerGroup, title: 'Categorías', route: '/admin/categories' },
     { icon: faBuilding, title: 'Propiedades', route: '/admin/properties' },
     { icon: faUsers, title: 'Usuarios', route: '/admin/users' },
-    { icon: faGear, title: 'Configuración', route: '/admin/settings' }
+    { icon: faGear, title: 'Configuración', route: '/admin/settings' },
+    { icon: faLocationDot, title: 'Ubicación', route: '/admin/location' }
   ];
 
 }

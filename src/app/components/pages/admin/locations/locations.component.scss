@@ -1,0 +1,53 @@
+@import 'src/styles/variables';
+
+.locations-page {
+    padding: 0 2rem;
+    padding-bottom: 3rem;
+    box-sizing: border-box;
+
+    &__title {
+        font-size: 24px;
+        margin-bottom: 1rem;
+        font-family: $font-primary;
+        color: $color-text-primary;
+        font-weight: 400;
+    }
+
+    &__subtitle {
+        font-size: 18px;
+        margin-bottom: 1rem;
+        font-family: $font-primary;
+        color: $color-text-primary;
+        font-weight: 400;
+    }
+
+    &__table-container {
+        margin-bottom: 3rem;
+    }
+
+    &__content {
+        max-width: calc(100% - 3rem);
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 8px;
+        border: 1px solid #E5E7EB;
+        background-color: $color-white;
+        padding: 32px;
+        box-shadow: $box-shadow-subtle;
+    }
+
+    @media (min-width: 768px) {
+        padding: 1rem 2rem;
+        padding-bottom: 3rem;
+
+        &__table-container {
+            margin-bottom: 5rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        &__content {
+            padding: 16px;
+        }
+    }
+}

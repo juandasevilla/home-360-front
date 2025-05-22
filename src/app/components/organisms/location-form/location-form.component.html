@@ -1,0 +1,79 @@
+<form [formGroup]="locationForm" (ngSubmit)="onSubmit()" class="location-form">
+  <!-- Campo de nombre -->
+  <app-form-field
+    label="Nombre"
+    [id]="'location-name'"
+    [required]="true"
+    [errorMessage]="hasError('name') ? getErrorMessage('name') : ''">
+    <app-input
+      [id]="'location-name'"
+      formControlName="name"
+      placeholder="Ej. Zona Norte"
+      [maxLength]="nameMaxLength">
+    </app-input>
+    <div class="location-form__char-counter">
+      {{ nameCharsRemaining }} caracteres restantes
+    </div>
+  </app-form-field>
+  
+  <!-- Campo de descripción -->
+  <app-form-field
+    label="Descripción"
+    [id]="'location-description'"
+    [required]="true"
+    [errorMessage]="hasError('description') ? getErrorMessage('description') : ''">
+    <app-input
+      [id]="'location-description'"
+      formControlName="description"
+      placeholder="Descripción breve de la ubicación"
+      [maxLength]="descriptionMaxLength">
+    </app-input>
+    <div class="location-form__char-counter">
+      {{ descriptionCharsRemaining }} caracteres restantes
+    </div>
+  </app-form-field>
+  
+  <!-- Contenedor para los selects en línea -->
+  <div class="location-form__inline-selects">
+    <!-- Selector de Departamento -->
+    <app-form-field
+      label="Departamento"
+      [id]="'location-department'"
+      [required]="true"
+      [errorMessage]="hasError('departmentId') ? getErrorMessage('departmentId') : ''">
+      <select formControlName="departmentId" id="location-department" class="location-form__select">
+        <option [ngValue]="null">Seleccione un departamento</option>
+        <option *ngFor="let department of departments" [ngValue]="department.id">
+          {{ department.name }}
+        </option>
+      </select>
+    </app-form-field>
+    
+    <!-- Selector de Ciudad (dependiente del departamento) -->
+    <app-form-field
+      label="Ciudad"
+      [id]="'location-city'"
+      [required]="true"
+      [errorMessage]="hasError('cityId') ? getErrorMessage('cityId') : ''">
+      <select 
+        formControlName="cityId" 
+        id="location-city" 
+        class="location-form__select"
+        [disabled]="!locationForm.get('departmentId')?.value">
+        <option [ngValue]="null">Seleccione una ciudad</option>
+        <option *ngFor="let city of cities" [ngValue]="city.id">
+          {{ city.name }}
+        </option>
+      </select>
+    </app-form-field>
+  </div>
+  
+  <!-- Botones de acción -->
+  <div class="location-form__actions">
+    <app-button
+      [text]="isSubmitting ? 'Creando...' : 'Crear Ubicación'"
+      [type]="'submit'"
+      [disabled]="isSubmitting">
+    </app-button>
+  </div>
+</form>

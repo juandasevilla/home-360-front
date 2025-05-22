@@ -51,4 +51,12 @@
             padding: 16px; // Menor padding en pantallas pequeñas
         }
     }
+
+    &__title {
+        font-size: 24px;
+        margin-bottom: 1rem;
+        font-family: $font-primary;
+        color: $color-text-primary;
+        font-weight: 400; // Aseguramos que sea 400 (normal, no bold)
+    }
 }
