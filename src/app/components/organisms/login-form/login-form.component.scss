@@ -1,0 +1,7 @@
+.login-form{
+    &__actions {
+    display: flex;
+    justify-content: center; // Centra horizontalmente el botón
+    margin-top: 1rem;
+    }
+}

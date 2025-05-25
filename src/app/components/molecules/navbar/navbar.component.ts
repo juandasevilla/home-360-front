@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -16,8 +17,10 @@ export class NavbarComponent {
     { text: 'Renta', url: '/renta' },
     { text: 'Vende', url: '/vende' }
   ];
+
+  constructor(private router: Router) {}
   
   onButtonClick() {
-    // Puedes implementar navegación o acción del botón
+    this.router.navigate([this.buttonLink]);
   }
 }

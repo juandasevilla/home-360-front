@@ -1,0 +1,43 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+  <!-- Email field -->
+  <app-form-field 
+    id="login-email"
+    label="Correo Electrónico"
+    [required]="true"
+    [errorMessage]="hasError('email') ? getErrorMessage('email') : ''">
+    <app-input
+      id="login-email"
+      formControlName="email"
+      placeholder="Escriba el correo electrónico"
+      [required]="true"
+      [hasError]="hasError('email')"
+      [maxLength]="emailMaxLength"
+      [showCharCount]="false">
+    </app-input>
+  </app-form-field>
+
+  <app-form-field 
+    id="login-password"
+    label="Contraseña"
+    [required]="true"
+    [errorMessage]="hasError('password') ? getErrorMessage('password') : ''">
+    <app-input
+      id="login-password"
+      formControlName="password"
+      placeholder="Escriba la contraseña"
+      [required]="true"
+      [hasError]="hasError('password')"
+      [maxLength]="passwordMaxLength"
+      [showCharCount]="false">
+    </app-input>
+  </app-form-field>
+
+  <!-- Botón de crear -->
+  <div class="login-form__actions">
+    <app-button 
+      text="Iniciar Sesión"
+      type="submit"
+      [disabled]="loginForm.invalid || isSubmitting">
+    </app-button>
+  </div>
+</form>
