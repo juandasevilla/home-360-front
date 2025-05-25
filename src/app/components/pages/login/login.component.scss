@@ -31,4 +31,35 @@
         color: $color-text-primary;
         font-weight: 400; // Aseguramos que sea 400 (normal, no bold)
     }
+
+    &__logo {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 24px;
+        
+        img {
+            height: 80px; // Ajusta según el tamaño deseado
+            width: auto;
+        }
+    }
+    
+    &__welcome {
+        text-align: center;
+        margin-bottom: 32px;
+        font-family: $font-primary;
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: $color-text-primary;
+            margin-bottom: 8px;
+            font-family: $font-primary;
+        }
+        
+        p {
+            color: $color-text-subtitle;
+            font-size: 16px;
+            font-family: $font-primary;
+        }
+    }
 }
