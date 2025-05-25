@@ -1,22 +1,22 @@
 <div class="input-general">
-  <input
-    [id]="id"
-    [type]="type"
-    [placeholder]="placeholder" 
-    [required]="required"
-    [disabled]="disabled"
-    [attr.maxlength]="maxLength" 
-    [value]="value"
-    [ngClass]="{
-      'input__field': true, 
-      'input__field--error': hasError
-    }"
-    (input)="onInputChange($event)"
-  >
-  <div *ngIf="showCharCount && maxLength" class="input__char-count">
-    {{currentLength}}/{{maxLength}}
-  </div>
-  <div [ngClass]="{'input__error': true, 'input__error--visible': hasError && errorMessage}">
-    {{ errorMessage }}
+  <div class="input-wrapper">
+    <input
+      [id]="id"
+      [type]="type"
+      [placeholder]="placeholder" 
+      [required]="required"
+      [disabled]="disabled"
+      [attr.maxlength]="maxLength" 
+      [value]="value"
+      [ngClass]="{
+        'input__field': true, 
+        'input__field--error': hasError,
+        'input__field--with-counter': showCharCount && maxLength
+      }"
+      (input)="onInputChange($event)"
+    >
+    <div class="input__char-count" *ngIf="showCharCount && maxLength">
+      {{ currentLength }}/{{ maxLength }}
+    </div>
   </div>
 </div>

@@ -27,6 +27,10 @@ import { CategoryTableComponent } from './components/organisms/category-table/ca
 import { LocationsComponent } from './components/pages/admin/locations/locations.component';
 import { LocationFormComponent } from './components/organisms/location-form/location-form.component';
 import { LocationTableComponent } from './components/organisms/location-table/location-table.component';
+import { UsersComponent } from './components/pages/admin/users/users.component';
+import { UserFormComponent } from './components/organisms/user-form/user-form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Añadir esto
+import { ToastrModule } from 'ngx-toastr'; 
 
 @NgModule({
   declarations: [
@@ -51,7 +55,9 @@ import { LocationTableComponent } from './components/organisms/location-table/lo
     CategoryTableComponent,
     LocationsComponent,
     LocationFormComponent,
-    LocationTableComponent
+    LocationTableComponent,
+    UsersComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +65,13 @@ import { LocationTableComponent } from './components/organisms/location-table/lo
     FontAwesomeModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot({
+      timeOut: 5000,         // Tiempo que se muestra (ms)
+      positionClass: 'toast-center-center', // Posición (hay varias opciones)
+      preventDuplicates: true,          // Evitar mostrar el mismo mensaje varias veces
+      closeButton: true,                // Mostrar botón de cerrar
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
