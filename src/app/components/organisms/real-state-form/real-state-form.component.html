@@ -1,0 +1,143 @@
+<form [formGroup]="realStateForm" (ngSubmit)="onSubmit()" class="real-state-form">
+  <!-- Campo Nombre -->
+  <app-form-field 
+    id="real-state-name"
+    label="Nombre de la Propiedad"
+    [required]="true"
+    [errorMessage]="hasError('name') ? getErrorMessage('name') : ''">
+    <app-input
+      id="real-state-name"
+      formControlName="name"
+      placeholder="Escriba el nombre de la propiedad (máximo 100 caracteres)"
+      [required]="true"
+      [hasError]="hasError('name')"
+      [maxLength]="nameMaxLength"
+      [showCharCount]="true">
+    </app-input>
+  </app-form-field>
+  
+  <!-- Campo Descripción -->
+  <app-form-field
+    id="real-state-description"
+    label="Descripción"
+    [required]="true"
+    [errorMessage]="hasError('description') ? getErrorMessage('descripción') : ''">
+    <app-input
+      id="real-state-description"
+      formControlName="description"
+      placeholder="Ingrese una descripción de la propiedad (máximo 200 caracteres)"
+      [required]="true"
+      [hasError]="hasError('description')"
+      [maxLength]="descriptionMaxLength"
+      [showCharCount]="true">
+    </app-input>
+  </app-form-field>
+
+  <!-- Campo Habitaciones -->
+  <app-form-field
+    id="real-state-rooms"
+    label="Número de Habitaciones"
+    [required]="true"
+    [errorMessage]="hasError('rooms') ? getErrorMessage('rooms') : ''">
+    <app-input
+      id="real-state-rooms"
+      formControlName="rooms"
+      type="number"
+      placeholder="Ingrese el número de habitaciones"
+      [required]="true"
+      [hasError]="hasError('rooms')">
+    </app-input>
+  </app-form-field>
+
+  <!-- Campo Baños -->
+  <app-form-field
+    id="real-state-bathrooms"
+    label="Número de Baños"
+    [required]="true"
+    [errorMessage]="hasError('bathrooms') ? getErrorMessage('bathrooms') : ''">
+    <app-input
+      id="real-state-bathrooms"
+      formControlName="bathrooms"
+      type="number"
+      placeholder="Ingrese el número de baños"
+      [required]="true"
+      [hasError]="hasError('bathrooms')">
+    </app-input>
+  </app-form-field>
+
+  <!-- Campo Precio -->
+  <app-form-field
+    id="real-state-price"
+    label="Precio"
+    [required]="true"
+    [errorMessage]="hasError('price') ? getErrorMessage('price') : ''">
+    <app-input
+      id="real-state-price"
+      formControlName="price"
+      type="number"
+      placeholder="Ingrese el precio de la propiedad"
+      [required]="true"
+      [hasError]="hasError('price')">
+    </app-input>
+  </app-form-field>
+
+  <!-- location -->
+  <app-form-field
+    label="Ubicación"
+    [id]="'real-state-location'"
+    [required]="true"
+    [errorMessage]="hasError('locationId') ? getErrorMessage('locationId') : ''">
+    <select 
+      formControlName="locationId" 
+      id="real-state-location" 
+      class="real-state-form__select">
+      <option [ngValue]="null">Seleccione una Ubicación</option>
+      <option *ngFor="let location of locations" [ngValue]="location.id">
+          {{ location.name }}
+        </option>
+    </select>
+  </app-form-field>
+
+  <!-- categories -->
+  <app-form-field
+    label="Categoría"
+    [id]="'real-state-category'"
+    [required]="true"
+    [errorMessage]="hasError('categoryId') ? getErrorMessage('categoryId') : ''">
+    <select 
+      formControlName="categoryId" 
+      id="real-state-category" 
+      class="real-state-form__select">
+      <option [ngValue]="null">Seleccione una Categoria</option>
+      <option *ngFor="let category of categories" [ngValue]="category.id">
+          {{ category.name }}
+        </option>
+    </select>
+  </app-form-field>
+
+  <!-- Campo de fecha de nacimiento -->
+  <app-form-field
+  label="Fecha de publicación"
+  [id]="'real-state-publishDate'"
+  [required]="true"
+  [errorMessage]="hasError('publishDate') ? getErrorMessage('publishDate') : ''">
+  <div class="custom-date-input">
+      <input
+      type="date"
+      id="real-state-publishDate"
+      formControlName="publishDate"
+      class="form-control"
+      [max]="maxPublishDate"
+      [min]="minPublishDate">
+  </div>
+  </app-form-field>
+  
+  <!-- Botón de crear -->
+  <div class="real-state-form__actions">
+    <app-button 
+      text="Crear"
+      type="submit"
+      [disabled]="realStateForm.invalid || isSubmitting">
+    </app-button>
+  </div>
+</form>

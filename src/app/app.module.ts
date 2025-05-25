@@ -30,7 +30,9 @@ import { LocationTableComponent } from './components/organisms/location-table/lo
 import { UsersComponent } from './components/pages/admin/users/users.component';
 import { UserFormComponent } from './components/organisms/user-form/user-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Añadir esto
-import { ToastrModule } from 'ngx-toastr'; 
+import { ToastrModule } from 'ngx-toastr';
+import { RealStateComponent } from './components/pages/real-state/real-state/real-state.component';
+import { RealStateFormComponent } from './components/organisms/real-state-form/real-state-form.component'; 
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { ToastrModule } from 'ngx-toastr';
     LocationFormComponent,
     LocationTableComponent,
     UsersComponent,
-    UserFormComponent
+    UserFormComponent,
+    RealStateComponent,
+    RealStateFormComponent
   ],
   imports: [
     BrowserModule,
