@@ -1,0 +1,27 @@
+@import 'src/styles/variables';
+
+
+.real-state-page {
+    &__content {
+        max-width: calc(100% - 3rem); // Cambiamos a max-width en lugar de width fijo
+        width: 100%; // Esto hará que se adapte al ancho disponible
+        margin: 0 auto; // Centrar el contenedor
+        border-radius: 8px;
+        border: 1px solid #E5E7EB;
+        background-color: $color-white;
+        padding: 32px; // Padding interno
+        box-shadow: $box-shadow-subtle;
+        
+        @media (max-width: 768px) {
+            padding: 16px; // Menor padding en pantallas pequeñas
+        }
+    }
+
+    &__title {
+        font-size: 24px;
+        margin-bottom: 1rem;
+        font-family: $font-primary;
+        color: $color-text-primary;
+        font-weight: 400; // Aseguramos que sea 400 (normal, no bold)
+    }
+}

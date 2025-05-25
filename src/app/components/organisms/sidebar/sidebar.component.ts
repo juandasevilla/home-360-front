@@ -18,7 +18,7 @@ export class SidebarComponent {
   menuItems: SidebarMenuItem[] = [
     { icon: faGaugeHigh, title: 'Dashboard', route: '/admin/dashboard' },
     { icon: faLayerGroup, title: 'Categorías', route: '/admin/categories' },
-    { icon: faBuilding, title: 'Propiedades', route: '/admin/properties' },
+    { icon: faBuilding, title: 'Propiedades', route: '/seller/real-state' },
     { icon: faUsers, title: 'Usuarios', route: '/admin/users' },
     { icon: faGear, title: 'Configuración', route: '/admin/settings' },
     { icon: faLocationDot, title: 'Ubicación', route: '/admin/location' }

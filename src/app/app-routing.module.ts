@@ -5,6 +5,7 @@ import { DashboardComponent } from './components/pages/admin/dashboard/dashboard
 import { CategoriesComponent } from './components/pages/admin/categories/categories.component';
 import { LocationsComponent } from './components/pages/admin/locations/locations.component';
 import { UsersComponent } from './components/pages/admin/users/users.component';
+import { RealStateComponent } from './components/pages/real-state/real-state/real-state.component';
 
 const routes: Routes = [
   
@@ -20,6 +21,16 @@ const routes: Routes = [
       { path: 'users', component: UsersComponent },
       //{ path: 'properties', component: PropertiesComponent },
       //{ path: 'settings', component: SettingsComponent }
+    ]
+  },
+
+  {
+    path: 'seller',
+    component: AdminLayoutComponent,
+    children: [
+      {path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {path: 'dashboard', component: DashboardComponent },
+      {path: 'real-state', component: RealStateComponent },
     ]
   },
   
