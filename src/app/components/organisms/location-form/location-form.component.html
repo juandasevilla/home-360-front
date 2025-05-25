@@ -9,11 +9,9 @@
       [id]="'location-name'"
       formControlName="name"
       placeholder="Ej. Zona Norte"
-      [maxLength]="nameMaxLength">
+      [maxLength]="nameMaxLength"
+      [showCharCount]="true">
     </app-input>
-    <div class="location-form__char-counter">
-      {{ nameCharsRemaining }} caracteres restantes
-    </div>
   </app-form-field>
   
   <!-- Campo de descripción -->
@@ -26,11 +24,9 @@
       [id]="'location-description'"
       formControlName="description"
       placeholder="Descripción breve de la ubicación"
-      [maxLength]="descriptionMaxLength">
+      [maxLength]="descriptionMaxLength"
+      [showCharCount]="true">
     </app-input>
-    <div class="location-form__char-counter">
-      {{ descriptionCharsRemaining }} caracteres restantes
-    </div>
   </app-form-field>
   
   <!-- Contenedor para los selects en línea -->

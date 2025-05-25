@@ -7,7 +7,9 @@
     <ng-content></ng-content>
   </div>
   
-  <div class="form-field__error" *ngIf="errorMessage">
-    {{ errorMessage }}
+  <div class="form-field__footer" *ngIf="errorMessage || (showCharCount && maxLength)">
+    <div class="form-field__error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
   </div>
 </div>

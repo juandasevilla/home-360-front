@@ -10,5 +10,8 @@ export class FormFieldComponent {
   @Input() label: string = '';
   @Input() required: boolean = false;
   @Input() errorMessage: string = '';
-
+  @Input() showCharCount: boolean = false;
+  @Input() currentLength: number = 0;
+  @Input() maxLength?: number;
+  
 }

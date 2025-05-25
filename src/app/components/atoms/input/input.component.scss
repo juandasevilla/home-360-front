@@ -1,21 +1,22 @@
 @import 'src/styles/variables';
 
-.input {
-  height: 42px;
+.input-general {
   display: flex;
   flex-direction: column;
-  max-width: 1072px; // Ancho máximo exacto
-  width: 100%; // Para que sea responsivo en pantallas más pequeñas
+  width: 100%;
+}
 
-  &__required {
-    color: $color-text-error-required;
-    margin-left: 4px;
-  }
+.input-wrapper {
+  position: relative; // Para posicionamiento absoluto del contador
+  width: 100%;
+}
 
+.input {
   &__field {
     width: 100%;
-    height: 30px;
+    height: 40px;
     padding-left: 8px;
+    padding-right: 48px; // Espacio para el contador
     border: 1px solid $color-border-form;
     border-radius: 8px;
     background-color: $color-white;
@@ -29,62 +30,55 @@
       font-size: 12px;
       font-family: $font-primary;
     }
-  }
-
-  &__field--error {
-    border-color: $color-text-error-required;
-  }
-
-  &__error {
-    color: $color-text-error-required;
-    font-size: 10px;
-    margin-top: 1px;
-    min-height: 20px;
-    font-family: $font-tertiary;
-    visibility: hidden;
-
-    &--visible {
-      visibility: visible;
+    
+    &--error {
+      border-color: $color-text-error-required;
+    }
+    
+    &--with-counter {
+      padding-right: 48px; // Asegurar espacio para el contador
     }
   }
-
+  
   &__char-count {
+    font-family: $font-primary;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 12px;
     color: $color-text-secondary;
-    text-align: right;
-    margin-top: 4px;
-    font-family: $font-primary;
-   }
+    background-color: rgba(255, 255, 255, 0.8); // Semi-transparente para no interferir mucho
+    padding: 0 4px;
+    border-radius: 4px;
+    pointer-events: none; // Para que no interfiera con el input
+  }
 }
 
 @media (min-width: 768px) {
-
-  .input-text__label {
+  .input__field {
     font-size: 13px;
-    line-height: 18px;
+    
+    &::placeholder {
+      font-size: 13px;
+    }
   }
-
-  .input-text__field {
+  
+  .input__char-count {
     font-size: 13px;
-  }
-
-  .input-text__error {
-    font-size: 11px;
   }
 }
 
 @media (min-width: 1024px) {
-
-  .input-text__label {
+  .input__field {
     font-size: 14px;
-    line-height: 20px;
+    
+    &::placeholder {
+      font-size: 14px;
+    }
   }
-
-  .input-text__field {
+  
+  .input__char-count {
     font-size: 14px;
-  }
-
-  .input-text__error {
-    font-size: 12px;
   }
 }

@@ -22,13 +22,21 @@ export class InputComponent implements ControlValueAccessor {
   @Input() errorMessage: string = '';
   @Input() maxLength?: number; // Nuevo input para límite
   @Input() showCharCount: boolean = false; // Mostrar contador
-  @Input() currentLength: number = 0; // Contador actual
   
   value: string = '';
   disabled: boolean = false;
   
   onChange: any = () => {};
   onTouched: any = () => {};
+
+   get currentLength(): number {
+    return this.value?.length || 0;
+  }
+  
+  // Getter para obtener el texto del contador
+  get charCountText(): string {
+    return `${this.currentLength}/${this.maxLength}`;
+  }
   
   onInputChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;

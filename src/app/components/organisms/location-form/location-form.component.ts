@@ -6,6 +6,7 @@ import { Location } from 'src/app/shared/models/Location';
 import { Department } from 'src/app/shared/models/Department';
 import { City } from 'src/app/shared/models/City';
 import { LocationService } from 'src/app/core/location/location.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-location-form',
@@ -29,7 +30,8 @@ export class LocationFormComponent {
   
   constructor(
     private fb: FormBuilder,
-    private locationService: LocationService // Reemplazar con el servicio real
+    private locationService: LocationService, 
+    private toastr: ToastrService
   ) {}
   
   ngOnInit(): void {
@@ -86,7 +88,6 @@ export class LocationFormComponent {
         }
       }
       
-      // Actualizar el filtrado después de cargar los datos
       this.setupFilters();
     },
     error: (error) => {
@@ -174,6 +175,7 @@ export class LocationFormComponent {
         console.log('Ubicación creada exitosamente:', response);
         this.isSubmitting = false;
         this.resetForm();
+        this.toastr.success('Ubicación creada exitosamente', 'Éxito');
       },
       error: (error) => {
         console.error('Error al crear la ubicación:', error);

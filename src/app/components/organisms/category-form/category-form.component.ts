@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryServiceService } from 'src/app/core/category/category-service.service';
 import { Category } from 'src/app/shared/models/Category';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-category-form',
@@ -18,7 +19,8 @@ export class CategoryFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private categoryService: CategoryServiceService
+    private categoryService: CategoryServiceService,
+    private toastr: ToastrService
   ) {}
   
   ngOnInit(): void {
@@ -69,7 +71,7 @@ export class CategoryFormComponent implements OnInit {
         console.log('Categoría creada exitosamente:', response);
         this.isSubmitting = false;
         this.resetForm();
-        // TODO: Mostrar mensaje de éxito o redireccionar
+        this.toastr.success('Categoría creada exitosamente', 'Éxito');
       },
       error: (error) => {
         console.error('Error al crear la categoría:', error);
@@ -91,18 +93,16 @@ export class CategoryFormComponent implements OnInit {
       control?.markAsUntouched();
     });
 
-    // Resetear explícitamente los contadores de caracteres
     this.nameCharsRemaining = this.nameMaxLength;
     this.descriptionCharsRemaining = this.descriptionMaxLength;
     
-    // Establecer valores vacíos explícitamente
     this.categoryForm.patchValue({
       name: '',
       description: ''
     });
   }
 
-  // Helper para las validaciones
+  //helper
   hasError(controlName: string): boolean {
     const control = this.categoryForm.get(controlName);
     return !!control && control.invalid && control.touched;

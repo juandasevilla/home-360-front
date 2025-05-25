@@ -1,0 +1,146 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+  <div class="user-form__inline-selects">
+    <!-- Campo de nombre -->
+    <app-form-field
+      label="Nombre"
+      [id]="'user-name'"
+      [required]="true"
+      [errorMessage]="hasError('name') ? getErrorMessage('name') : ''">
+      <app-input
+        [id]="'user-name'"
+        formControlName="name"
+        placeholder="Ej. Juan"
+        [maxLength]="nameMaxLength"
+        [showCharCount]="true">
+      </app-input>
+    </app-form-field>
+    
+    <!-- Campo de descripción -->
+    <app-form-field
+      label="Apellido"
+      [id]="'user-lastName'"
+      [required]="true"
+      [errorMessage]="hasError('lastName') ? getErrorMessage('lastName') : ''">
+      <app-input
+        [id]="'user-lastName'"
+        formControlName="lastName"
+        placeholder="Ej. Pérez"
+        [maxLength]="lastNameMaxLength"
+        [showCharCount]="true">
+      </app-input>
+    </app-form-field>
+  </div>
+
+  <div class="user-form__inline-selects">
+    <!-- Campo de identificación -->
+    <app-form-field
+      label="Identificación"
+      [id]="'user-identification'"
+      [required]="true"
+      [errorMessage]="hasError('Identification') ? getErrorMessage('Identification') : ''">
+      <app-input
+        [id]="'user-identification'"
+        formControlName="identification"
+        placeholder="Ej. 123456789"
+        [maxLength]="nameMaxLength"
+        [showCharCount]="true">
+      </app-input>
+    </app-form-field>
+
+    <!-- Campo de teléfono -->
+      <app-form-field
+      label="Teléfono"
+      [id]="'user-phone'"
+      [required]="true"
+      [errorMessage]="hasError('phone') ? getErrorMessage('phone') : ''">
+      <app-input
+          [id]="'user-phone'"
+          formControlName="phone"
+          placeholder="Ej. 3001234567"
+          [maxLength]="phoneMaxLength"
+          [showCharCount]="true">
+      </app-input>
+      </app-form-field>
+  </div>
+
+  <div class="user-form__inline-selects">
+      <!-- Campo de email -->
+      <app-form-field
+      label="Correo electrónico"
+      [id]="'user-email'"
+      [required]="true"
+      [errorMessage]="hasError('email') ? getErrorMessage('email') : ''">
+      <app-input
+          [id]="'user-email'"
+          formControlName="email"
+          placeholder="Ej. usuario@ejemplo.com"
+          [maxLength]="emailMaxLength"
+          [showCharCount]="true">
+      </app-input>
+      </app-form-field>
+
+      <!-- Campo de contraseña -->
+      <app-form-field
+      label="Contraseña"
+      [id]="'user-password'"
+      [required]="true"
+      [errorMessage]="hasError('password') ? getErrorMessage('password') : ''">
+      <app-input
+          [id]="'user-password'"
+          formControlName="password"
+          type="password"
+          placeholder="Ingrese su contraseña"
+          [maxLength]="passwordMaxLength"
+          [showCharCount]="true">
+      </app-input>
+      </app-form-field>
+  </div>
+
+  
+    <!-- Campo de fecha de nacimiento -->
+    <app-form-field
+    label="Fecha de nacimiento"
+    [id]="'user-birthDate'"
+    [required]="true"
+    [errorMessage]="hasError('birthDate') ? getErrorMessage('birthDate') : ''">
+    
+    <!-- Usando input type="date" nativo -->
+    <div class="custom-date-input">
+        <input
+        type="date"
+        id="user-birthDate"
+        formControlName="birthDate"
+        class="form-control"
+        [max]="maxBirthDate">
+    </div>
+    
+    <div class="date-format-hint">
+        Formato: DD/MM/AAAA
+    </div>
+    </app-form-field>
+
+    <!-- role -->
+    <app-form-field
+      label="Rol"
+      [id]="'user-role'"
+      [required]="true"
+      [errorMessage]="hasError('roleId') ? getErrorMessage('roleId') : ''">
+      <select 
+        formControlName="roleId" 
+        id="user-role" 
+        class="user-form__select">
+        <option [ngValue]="null">Seleccione un rol</option>
+        <option [ngValue]="2">Vendedor</option>
+      </select>
+    </app-form-field>
+  
+
+    <!-- Botones de acción -->
+  <div class="user-form__actions">
+    <app-button
+      [text]="isSubmitting ? 'Creando...' : 'Crear usuario'"
+      [type]="'submit'"
+      [disabled]="isSubmitting">
+    </app-button>
+  </div>
+</form>
