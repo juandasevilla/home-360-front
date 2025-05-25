@@ -32,7 +32,9 @@ import { UserFormComponent } from './components/organisms/user-form/user-form.co
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Añadir esto
 import { ToastrModule } from 'ngx-toastr';
 import { RealStateComponent } from './components/pages/real-state/real-state/real-state.component';
-import { RealStateFormComponent } from './components/organisms/real-state-form/real-state-form.component'; 
+import { RealStateFormComponent } from './components/organisms/real-state-form/real-state-form.component';
+import { LoginFormComponent } from './components/organisms/login-form/login-form.component';
+import { LoginComponent } from './components/pages/login/login.component'; 
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { RealStateFormComponent } from './components/organisms/real-state-form/r
     UsersComponent,
     UserFormComponent,
     RealStateComponent,
-    RealStateFormComponent
+    RealStateFormComponent,
+    LoginFormComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

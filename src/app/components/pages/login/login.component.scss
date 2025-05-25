@@ -1,0 +1,65 @@
+@import 'src/styles/variables';
+
+.login-page {
+    display: flex;
+    justify-content: center; // Centra horizontalmente
+    align-items: center;     // Centra verticalmente
+    min-height: 100vh;       // Ocupa toda la altura de la ventana
+    padding: 2rem;
+
+
+    &__content {
+        max-width: calc(100% - 3rem); // Cambiamos a max-width en lugar de width fijo
+        width: 100%; // Esto hará que se adapte al ancho disponible
+        margin: 0 auto; // Centrar el contenedor
+        max-width: 450px;
+        border-radius: 8px;
+        border: 1px solid #E5E7EB;
+        background-color: $color-white;
+        padding: 32px; // Padding interno
+        box-shadow: $box-shadow-subtle;
+        
+        @media (max-width: 768px) {
+            padding: 16px; // Menor padding en pantallas pequeñas
+        }
+    }
+
+    &__title {
+        font-size: 24px;
+        margin-bottom: 1rem;
+        font-family: $font-primary;
+        color: $color-text-primary;
+        font-weight: 400; // Aseguramos que sea 400 (normal, no bold)
+    }
+
+    &__logo {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 24px;
+        
+        img {
+            height: 80px; // Ajusta según el tamaño deseado
+            width: auto;
+        }
+    }
+    
+    &__welcome {
+        text-align: center;
+        margin-bottom: 32px;
+        font-family: $font-primary;
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: $color-text-primary;
+            margin-bottom: 8px;
+            font-family: $font-primary;
+        }
+        
+        p {
+            color: $color-text-subtitle;
+            font-size: 16px;
+            font-family: $font-primary;
+        }
+    }
+}

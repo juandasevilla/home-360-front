@@ -6,9 +6,11 @@ import { CategoriesComponent } from './components/pages/admin/categories/categor
 import { LocationsComponent } from './components/pages/admin/locations/locations.component';
 import { UsersComponent } from './components/pages/admin/users/users.component';
 import { RealStateComponent } from './components/pages/real-state/real-state/real-state.component';
+import { LoginComponent } from './components/pages/login/login.component';
 
 const routes: Routes = [
-  
+  { path: 'login', component: LoginComponent},
+
   // Rutas de administración
   {
     path: 'admin',
