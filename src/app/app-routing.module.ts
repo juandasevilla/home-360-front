@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from './components/layouts/admin-layout/admin-layout.component';
 import { DashboardComponent } from './components/pages/admin/dashboard/dashboard.component';
@@ -7,6 +7,7 @@ import { LocationsComponent } from './components/pages/admin/locations/locations
 import { UsersComponent } from './components/pages/admin/users/users.component';
 import { RealStateComponent } from './components/pages/real-state/real-state/real-state.component';
 import { LoginComponent } from './components/pages/login/login.component';
+import { ScheduleComponent } from './components/pages/schedule/schedule.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {path: 'dashboard', component: DashboardComponent },
       {path: 'real-state', component: RealStateComponent },
+      {path: 'schedule', component: ScheduleComponent },
     ]
   },
   

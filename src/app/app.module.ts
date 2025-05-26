@@ -34,7 +34,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { RealStateComponent } from './components/pages/real-state/real-state/real-state.component';
 import { RealStateFormComponent } from './components/organisms/real-state-form/real-state-form.component';
 import { LoginFormComponent } from './components/organisms/login-form/login-form.component';
-import { LoginComponent } from './components/pages/login/login.component'; 
+import { LoginComponent } from './components/pages/login/login.component';
+import { ScheduleComponent } from './components/pages/schedule/schedule.component';
+import { ScheduleFormComponent } from './components/organisms/schedule-form/schedule-form.component'; 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './core/interceptors/token.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -65,7 +70,9 @@ import { LoginComponent } from './components/pages/login/login.component';
     RealStateComponent,
     RealStateFormComponent,
     LoginFormComponent,
-    LoginComponent
+    LoginComponent,
+    ScheduleComponent,
+    ScheduleFormComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +88,10 @@ import { LoginComponent } from './components/pages/login/login.component';
       closeButton: true,                // Mostrar botón de cerrar
     })
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

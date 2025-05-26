@@ -22,12 +22,5 @@ export class UserService {
     return this.http.post<any>(this.apiUrl, userData);
   }
 
-  /**
-   * Inicia sesión de un usuario
-   * @param loginData Datos de inicio de sesión
-   * @returns Observable con la respuesta del servidor
-   */
-  login(loginData: Login): Observable<any> {
-    return this.http.post<any>(`${this.loginUrl}/login`, loginData);
-  }
+  
 }

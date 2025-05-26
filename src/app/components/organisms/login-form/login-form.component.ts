@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from 'src/app/core/user/user.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 import { Login } from 'src/app/shared/models/Login';
 import { ToastrService } from 'ngx-toastr';
 
@@ -17,7 +17,7 @@ export class LoginFormComponent {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
     private toastr: ToastrService
   ) {}
 
@@ -46,7 +46,7 @@ export class LoginFormComponent {
 
     const loginData: Login = this.loginForm.value;
 
-    this.userService.login(loginData).subscribe({
+    this.authService.login(loginData).subscribe({
       next: (response) => {
         this.toastr.success('Login successful');
         // Aquí puedes manejar la respuesta del servidor, como redirigir al usuario

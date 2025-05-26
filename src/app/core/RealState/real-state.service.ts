@@ -8,6 +8,7 @@ import { RealState } from 'src/app/shared/models/RealState';
 })
 export class RealStateService {
   private apiUrl = `http://localhost:8080/api/v1/real-state`;
+  private apigetlocations = `http://localhost:8080/api/v1/real-state?size=50`; //para crear horarios
   
     constructor(private http: HttpClient) { }
   
@@ -19,4 +20,13 @@ export class RealStateService {
     createRealState(realStateData: RealState): Observable<any> {
       return this.http.post<any>(this.apiUrl, realStateData);
     }
+
+    /**
+     * Obtiene una lista de propiedades
+     * @returns Observable con la lista de propiedades
+     */
+    getRealStates(): Observable<any> {
+      return this.http.get<any>(this.apigetlocations);
+    }
+    
 }

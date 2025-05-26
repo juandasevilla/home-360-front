@@ -1,0 +1,91 @@
+@import 'src/styles/variables';
+
+.schedule-form {
+  width: 100%;
+  
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+
+  &__select {
+    width: 100%;
+    height: 42px;
+    padding: 8px 12px;
+    border: 1px solid $color-border-form;
+    border-radius: 8px;
+    font-family: $font-primary;
+    font-size: 14px;
+    color: $color-text-primary;
+    background-color: $color-white;
+    
+    &:focus {
+      outline: none;
+      border-color: $color-blue;
+      box-shadow: 0 0 0 0.2rem rgba($color-blue, 0.25);
+    }
+    
+    &:disabled {
+      background-color: $color-background-body;
+      cursor: not-allowed;
+    }
+  }
+
+  // Aplicar estilos usando la clase form-control
+  .form-control {
+    width: 100% !important;
+    height: 42px !important;
+    padding: 8px 12px !important;
+    border: 1px solid $color-border-form !important;
+    border-radius: 8px !important;
+    font-family: $font-primary !important;
+    font-size: 14px !important;
+    color: $color-text-primary !important;
+    background-color: $color-white !important;
+    
+    &:focus {
+      outline: none !important;
+      border-color: $color-blue !important;
+      box-shadow: 0 0 0 0.2rem rgba($color-blue, 0.25) !important;
+    }
+    
+    &:disabled {
+      background-color: $color-background-body !important;
+      cursor: not-allowed !important;
+    }
+  }
+  
+  // Estilos específicos para el selector de fecha
+  input[type="date"].form-control {
+    &::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      opacity: 0.7;
+      
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  
+  // Estilos específicos para el selector de hora
+  input[type="time"].form-control {
+    &::-webkit-time-picker-indicator {
+      cursor: pointer;
+      opacity: 0.7;
+      
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  // Estado de error para todos los inputs
+  .form-control.ng-invalid.ng-touched {
+    border-color: red !important;
+    
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(red, 0.25) !important;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+<form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()" class="schedule-form">
+  <!-- categories -->
+  <app-form-field
+    label="Propiedad"
+    [id]="'schedule-real-state'"
+    [required]="true"
+    [errorMessage]="hasError('realStateId') ? getErrorMessage('realStateId') : ''">
+    <select 
+      formControlName="realStateId" 
+      id="schedule-real-state" 
+      class="schedule-form__select">
+      <option [ngValue]="null">Seleccione una Propiedad</option>
+      <option *ngFor="let realState of realStates" [ngValue]="realState.id">
+          {{ realState.name }}
+        </option>
+    </select>
+  </app-form-field>
+
+  <!-- Fecha Inicial -->
+  <app-form-field 
+    id="schedule-initial-date"
+    label="Fecha de inicio"
+    [required]="true"
+    [errorMessage]="hasError('initialDate') ? getErrorMessage('initialDate') : ''">
+    <input
+      type="date"
+      id="schedule-initial-date"
+      formControlName="initialDate"
+      class="form-control"
+      [min]="minScheduleDate">
+  </app-form-field>
+
+  <!-- Hora Inicial -->
+  <app-form-field 
+    id="schedule-initial-time"
+    label="Hora de inicio"
+    [required]="true"
+    [errorMessage]="hasError('initialTime') ? getErrorMessage('initialTime') : ''">
+    <input
+      type="time"
+      id="schedule-initial-time"
+      formControlName="initialTime"
+      class="form-control"
+      step="1800"> <!-- Intervalos de 30 minutos (30 * 60 segundos) -->
+  </app-form-field>
+  
+  <!-- Fecha Final -->
+  <app-form-field 
+    id="schedule-final-date"
+    label="Fecha de fin"
+    [required]="true"
+    [errorMessage]="hasError('finalDate') ? getErrorMessage('finalDate') : ''">
+    <input
+      type="date"
+      id="schedule-final-date"
+      formControlName="finalDate"
+      class="form-control"
+      [min]="scheduleForm.get('initialDate')?.value || minScheduleDate">
+  </app-form-field>
+  
+  <!-- Hora Final -->
+  <app-form-field 
+    id="schedule-final-time"
+    label="Hora de fin"
+    [required]="true"
+    [errorMessage]="hasError('finalTime') ? getErrorMessage('finalTime') : ''">
+    <input
+      type="time"
+      id="schedule-final-time"
+      formControlName="finalTime"
+      class="form-control"
+      step="1800"> <!-- Intervalos de 30 minutos -->
+  </app-form-field>
+
+  <!-- Botón de crear -->
+  <div class="schedule-form__actions">
+    <app-button 
+      text="Agendar"
+      type="submit"
+      [disabled]="scheduleForm.invalid || isSubmitting">
+    </app-button>
+  </div>
+</form>
