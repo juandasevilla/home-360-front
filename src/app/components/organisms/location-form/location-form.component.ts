@@ -40,7 +40,6 @@ export class LocationFormComponent {
     this.setupFilters();
     
     // Cargar los departamentos al iniciar
-    this.loadDepartments();
     this.loadCities();
     
     // Observador para cambios en el departamento seleccionado
@@ -74,6 +73,7 @@ export class LocationFormComponent {
   
   // Ejemplo: cargar ciudades por departamento (esto será reemplazado por llamadas al servicio)
   private loadCities(): void {
+  console.log('Iniciando carga de ciudades...');
   this.locationService.getCities(0, 50).subscribe({
     next: (response) => {
       console.log('Ciudades cargadas:', response); // Log para depuración
@@ -97,31 +97,19 @@ export class LocationFormComponent {
 }
 
   private setupFilters(): void {
-    // Filtrado para departamentos
-    this.filteredDepartments = this.locationForm.get('departmentId')!.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      distinctUntilChanged(),
-      map(value => {
-        const filterValue = typeof value === 'string' ? value.toLowerCase() : '';
-        return this.departments.filter(department => 
-          department.name.toLowerCase().includes(filterValue)
-        );
-      })
-    );
-    
-    // Filtrado para ciudades
-    this.filteredCities = this.locationForm.get('cityId')!.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      distinctUntilChanged(),
-      map(value => {
-        const filterValue = typeof value === 'string' ? value.toLowerCase() : '';
-        return this.cities.filter(city => 
-          city.name.toLowerCase().includes(filterValue)
-        );
-      })
-    );
+  // Solo filtrar ciudades, ya que eliminaste el departamento
+    if (this.locationForm.get('cityId')) {
+      this.filteredCities = this.locationForm.get('cityId')!.valueChanges.pipe(
+        startWith(''),
+        map(value => {
+          const filterValue = typeof value === 'string' ? value.toLowerCase() : '';
+          return this.cities.filter(city => 
+            city.name.toLowerCase().includes(filterValue) || 
+            city.department?.name.toLowerCase().includes(filterValue)
+          );
+        })
+      );
+    }
   }
 
   private setupCharCounters(): void {
@@ -140,7 +128,6 @@ export class LocationFormComponent {
     this.locationForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(this.nameMaxLength)]],
       description: ['', [Validators.required, Validators.maxLength(this.descriptionMaxLength)]],
-      departmentId: [null, Validators.required],
       cityId: [null, Validators.required]
     });
   }
@@ -165,7 +152,6 @@ export class LocationFormComponent {
     const locationData: Location = {
       name: this.locationForm.value.name,
       description: this.locationForm.value.description,
-      departmentId: this.locationForm.value.departmentId,
       cityId: this.locationForm.value.cityId
     };
 
@@ -179,6 +165,7 @@ export class LocationFormComponent {
       },
       error: (error) => {
         console.error('Error al crear la ubicación:', error);
+        this.toastr.error('Error al crear la ubicación', error);
         this.isSubmitting = false;
       }
     });

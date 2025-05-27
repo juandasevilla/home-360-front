@@ -14,7 +14,7 @@ export class LocationTableComponent {
       { key: 'id', header: 'ID', width: '80px' },
       { key: 'name', header: 'Nombre', width: '25%' },
       { key: 'description', header: 'Descripción' },
-      { key: 'department.name', header: 'Departamento' },
+      { key: 'city.department.name', header: 'Departamento' },
       { key: 'city.name', header: 'Ciudad' },
     ];
     
