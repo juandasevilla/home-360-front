@@ -8,6 +8,8 @@ import { UsersComponent } from './components/pages/admin/users/users.component';
 import { RealStateComponent } from './components/pages/real-state/real-state/real-state.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { ScheduleComponent } from './components/pages/schedule/schedule.component';
+import { authGuard } from './core/guards/auth.guard';
+import { roleGuard } from './core/guards/role.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -16,6 +18,8 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN'] }, // Asegúrate de que el guardia de roles esté configurado para manejar esto 
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
@@ -30,6 +34,8 @@ const routes: Routes = [
   {
     path: 'seller',
     component: AdminLayoutComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['SELLER'] }, 
     children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {path: 'dashboard', component: DashboardComponent },

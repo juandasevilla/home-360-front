@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { Login } from 'src/app/shared/models/Login';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -18,7 +19,8 @@ export class LoginFormComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router 
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +52,7 @@ export class LoginFormComponent {
       next: (response) => {
         this.toastr.success('Login successful');
         // Aquí puedes manejar la respuesta del servidor, como redirigir al usuario
+        this.router.navigate(['admin/dashboard']); // Asegúrate de importar Router y agregarlo en el constructor
       },
       error: (error) => {
         this.toastr.error('Login failed');
