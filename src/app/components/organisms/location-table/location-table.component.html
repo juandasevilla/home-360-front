@@ -1,4 +1,21 @@
 <div class="location-table">
+  <!-- Añadir barra de búsqueda -->
+  <div class="location-table__search-container">
+    <div class="location-table__search">
+      <input 
+        type="text" 
+        placeholder="Buscar por nombre..."
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="onSearch()"
+        class="location-table__search-input"
+      />
+      <button 
+        class="location-table__search-button"
+        (click)="onSearch()">
+        Buscar
+      </button>
+    </div>
+  </div>   
 
   <app-data-table
     [columns]="columns"

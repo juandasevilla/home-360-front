@@ -24,6 +24,7 @@ export class LocationTableComponent {
     totalPages: number = 0;
     totalElements: number = 0;
     pageSize: number = 10;
+    searchTerm: string = '';
     
     constructor(private locationService: LocationService) {}
     
@@ -34,7 +35,7 @@ export class LocationTableComponent {
     loadCategories(): void {
       this.loading = true;
       
-      this.locationService.getLocations(this.currentPage, this.pageSize).subscribe({
+      this.locationService.getLocations(this.currentPage, this.pageSize, false, this.searchTerm).subscribe({
         next: (response: Page<Location>) => {
           this.locations = response.content;
           this.totalPages = response.totalPages;
@@ -46,6 +47,11 @@ export class LocationTableComponent {
           this.loading = false;
         }
       });
+    }
+
+    onSearch(): void {
+    this.currentPage = 0; // Reset a la primera página al buscar
+    this.loadCategories();
     }
     
     onPageChange(page: number): void {

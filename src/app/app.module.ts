@@ -40,6 +40,7 @@ import { ScheduleFormComponent } from './components/organisms/schedule-form/sche
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
       positionClass: 'toast-center-center', // Posición (hay varias opciones)
       preventDuplicates: true,          // Evitar mostrar el mismo mensaje varias veces
       closeButton: true,                // Mostrar botón de cerrar
-    })
+    }),
+    FormsModule 
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
