@@ -1,0 +1,18 @@
+<div class="real-state-table">
+  <app-data-table
+    [columns]="columns"
+    [data]="realStates"
+    [loading]="loading"
+    emptyMessage="No hay propiedades disponibles."
+    (rowClick)="onRealStateSelect($event)">
+  </app-data-table>
+  
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    [totalElements]="totalElements"
+    [pageSize]="pageSize"
+    [loading]="loading"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
+</div>

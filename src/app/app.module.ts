@@ -41,6 +41,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { FormsModule } from '@angular/forms';
+import { RealStateTableComponent } from './components/organisms/real-state-table/real-state-table.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { FormsModule } from '@angular/forms';
     LoginFormComponent,
     LoginComponent,
     ScheduleComponent,
-    ScheduleFormComponent
+    ScheduleFormComponent,
+    RealStateTableComponent
   ],
   imports: [
     BrowserModule,
