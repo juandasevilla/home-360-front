@@ -5,7 +5,10 @@
       [logoAlt]="logoAlt"
       [buttonText]="buttonText"
       [buttonLink]="buttonLink"
-      [navLinks]="navLinks">
+      [navLinks]="navLinks"
+      [isLoggedIn]="isLoggedIn"
+      [userRole]="userRole"
+      (logoutClicked)="onLogout()">
     </app-navbar>
   </div>
 </header>

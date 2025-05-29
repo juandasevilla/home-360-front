@@ -11,9 +11,15 @@ import { ScheduleComponent } from './components/pages/schedule/schedule.componen
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
 import { ForbiddenPageComponent } from './components/pages/forbidden-page/forbidden-page.component';
+import { loginGuard } from './core/guards/login.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent},
+  { 
+    path: 'login', 
+    component: LoginComponent,
+    canActivate: [loginGuard] 
+  },
+  
   { path: 'forbidden', component: ForbiddenPageComponent },
 
   // Rutas de administración

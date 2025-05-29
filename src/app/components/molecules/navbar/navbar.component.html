@@ -4,16 +4,40 @@
   </div>
   
   <div class="navbar__right">
-    <div class="navbar__links">
+    <!-- ✅ MOSTRAR LINKS SOLO SI NO ESTÁ LOGUEADO -->
+    <div class="navbar__links" *ngIf="!isLoggedIn">
       <span *ngFor="let link of navLinks; let i = index" class="navbar__link-item">
         <a [routerLink]="link.url" class="navbar__link">{{ link.text }}</a>
       </span>
     </div>
     
+    <!-- ✅ MOSTRAR BOTÓN LOGIN SOLO SI NO ESTÁ LOGUEADO -->
     <app-button 
+      *ngIf="!isLoggedIn"
       [text]="buttonText" 
       buttonStyle="primary" 
       (buttonClick)="onButtonClick()">
     </app-button>
+
+    <!-- ✅ MOSTRAR DROPDOWN DE USUARIO SI ESTÁ LOGUEADO -->
+    <div class="navbar__user-menu" *ngIf="isLoggedIn">
+      <div class="navbar__user-button" (click)="toggleDropdown()">
+        <span class="navbar__user-name">{{ userRole }}</span>
+        <i class="navbar__dropdown-icon" [class.rotated]="showDropdown">▼</i>
+      </div>
+      
+      <!-- ✅ DROPDOWN MENU -->
+      <div class="navbar__dropdown" *ngIf="showDropdown">
+        <div class="navbar__dropdown-content">
+          <button class="navbar__dropdown-item" (click)="onLogout()">
+            <i class="navbar__logout-icon">🚪</i>
+            Cerrar Sesión
+          </button>
+        </div>
+      </div>
+      
+      <!-- ✅ OVERLAY PARA CERRAR DROPDOWN -->
+      <div class="navbar__overlay" *ngIf="showDropdown" (click)="closeDropdown()"></div>
+    </div>
   </div>
 </div>

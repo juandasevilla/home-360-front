@@ -27,7 +27,9 @@
       id="schedule-initial-date"
       formControlName="initialDate"
       class="form-control"
-      [min]="minScheduleDate">
+      [min]="minScheduleDate"
+      [max]="maxScheduleDate"
+      onkeydown="return false">
   </app-form-field>
 
   <!-- Hora Inicial -->
@@ -55,7 +57,9 @@
       id="schedule-final-date"
       formControlName="finalDate"
       class="form-control"
-      [min]="scheduleForm.get('initialDate')?.value || minScheduleDate">
+      [min]="scheduleForm.get('initialDate')?.value || minScheduleDate"
+      [max]="maxScheduleDate"
+      onkeydown="return false">
   </app-form-field>
   
   <!-- Hora Final -->

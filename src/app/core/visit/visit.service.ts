@@ -7,7 +7,7 @@ import { Schedule } from 'src/app/shared/models/Schedule';
   providedIn: 'root'
 })
 export class VisitService {
-  private apiUrl = `http://localhost:8080/api/v1/schedule`;
+  private apiUrl = `http://localhost:8081/api/v1/schedule`;
     
   
   constructor(private http: HttpClient) { }

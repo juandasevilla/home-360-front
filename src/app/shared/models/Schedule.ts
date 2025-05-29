@@ -3,5 +3,5 @@ export interface Schedule {
   initialDate: string;
   finalDate: string;
   realStateId: number;
-  userId: number;
+  userId?: number;
 }

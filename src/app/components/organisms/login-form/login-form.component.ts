@@ -15,6 +15,7 @@ export class LoginFormComponent {
   isSubmitting: boolean = false;
   emailMaxLength: number = 50;
   passwordMaxLength: number = 50;
+  private readonly emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   constructor(
     private fb: FormBuilder,
@@ -29,7 +30,8 @@ export class LoginFormComponent {
 
   private initForm(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(this.emailMaxLength)]],
+      email: ['', [Validators.required, Validators.email, 
+        Validators.maxLength(this.emailMaxLength), Validators.pattern(this.emailPattern)]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(this.passwordMaxLength)]]
     });
   }
@@ -51,8 +53,16 @@ export class LoginFormComponent {
     this.authService.login(loginData).subscribe({
       next: (response) => {
         this.toastr.success('Login successful');
-        // Aquí puedes manejar la respuesta del servidor, como redirigir al usuario
-        this.router.navigate(['admin/dashboard']); // Asegúrate de importar Router y agregarlo en el constructor
+        const userRole = this.authService.getUserRole();
+        if (userRole === 'ADMIN') {
+          this.router.navigate(['admin/dashboard']);
+        } else if (userRole === 'SELLER') {
+          this.router.navigate(['seller/dashboard']);
+        }
+        else {
+          this.router.navigate(['buyer/dashboard']);
+        }
+        
       },
       error: (error) => {
         this.toastr.error('Login failed');
@@ -86,6 +96,10 @@ export class LoginFormComponent {
 
     if (control.errors['maxlength']) {
     return `Debe tener máximo ${control.errors['maxlength'].requiredLength} caracteres`; // Corregido
+    }
+
+    if (control.errors['email'] || control.errors['pattern']) {
+      return 'El formato del email no es válido. Debe ser ej usuario@dominio.com';
     }
     
     return 'Campo inválido';

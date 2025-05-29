@@ -6,7 +6,7 @@ import { User } from 'src/app/shared/models/User';
 describe('UserService', () => {
   let service: UserService;
   let httpMock: HttpTestingController;
-  const apiUrl = 'http://localhost:8080/api/v1/user';
+  const apiUrl = 'http://localhost:8082/api/v1/user';
 
   beforeEach(() => {
     TestBed.configureTestingModule({

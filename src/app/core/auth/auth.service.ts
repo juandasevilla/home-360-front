@@ -9,7 +9,7 @@ import { Login } from 'src/app/shared/models/Login';
 export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
   private readonly ROLE_KEY = 'user_role';
-  private apiUrl = `http://localhost:8080/api/v1/auth`;
+  private apiUrl = `http://localhost:8082/api/v1/auth`;
 
   constructor(private http: HttpClient) { }
 
