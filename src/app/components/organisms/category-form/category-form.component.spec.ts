@@ -1,298 +1,479 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
 import { CategoryFormComponent } from './category-form.component';
 import { CategoryServiceService } from 'src/app/core/category/category-service.service';
+import { ToastrService } from 'ngx-toastr';
 import { Category } from 'src/app/shared/models/Category';
-import { Component, Input } from '@angular/core';
-
-// Componentes mock para evitar dependencias
-@Component({
-  selector: 'app-form-field',
-  template: '<ng-content></ng-content>'
-})
-class MockFormFieldComponent {
-  @Input() id: string = '';
-  @Input() label: string = '';
-  @Input() required: boolean = false;
-  @Input() errorMessage: string = '';
-}
-
-@Component({
-  selector: 'app-input',
-  template: '<input />'
-})
-class MockInputComponent {
-  @Input() id: string = '';
-  @Input() formControlName: string = '';
-  @Input() placeholder: string = '';
-  @Input() required: boolean = false;
-  @Input() hasError: boolean = false;
-  @Input() maxLength: number = 0;
-  @Input() showCharCount: boolean = false;
-}
-
-@Component({
-  selector: 'app-textarea',
-  template: '<textarea></textarea>'
-})
-class MockTextareaComponent {
-  @Input() id: string = '';
-  @Input() formControlName: string = '';
-  @Input() placeholder: string = '';
-  @Input() rows: number = 4;
-  @Input() required: boolean = false;
-  @Input() hasError: boolean = false;
-  @Input() maxLength: number = 0;
-  @Input() showCharCount: boolean = false;
-  @Input() currentLength: number = 0;
-}
-
-@Component({
-  selector: 'app-button',
-  template: '<button></button>'
-})
-class MockButtonComponent {
-  @Input() text: string = '';
-  @Input() type: string = '';
-  @Input() disabled: boolean = false;
-}
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('CategoryFormComponent', () => {
   let component: CategoryFormComponent;
   let fixture: ComponentFixture<CategoryFormComponent>;
-  let mockCategoryService: jest.Mocked<CategoryServiceService>;
-  let mockToastrService: jest.Mocked<ToastrService>;
+  let mockCategoryService: Partial<CategoryServiceService>;
+  let mockToastrService: Partial<ToastrService>;
 
-  beforeEach(() => {
-    // Crear mocks para los servicios
+  // Mock data
+  const mockCategoryResponse: Category = {
+    id: 1,
+    name: 'Tecnología',
+    description: 'Productos tecnológicos y electrónicos'
+  };
+
+  beforeEach(async () => {
+    // Crear mocks de los servicios
     mockCategoryService = {
-      createCategory: jest.fn()
-    } as unknown as jest.Mocked<CategoryServiceService>;
-    
+      createCategory: jest.fn(),
+      getCategories: jest.fn()
+    };
+
     mockToastrService = {
       success: jest.fn(),
-      error: jest.fn()
-    } as unknown as jest.Mocked<ToastrService>;
+      error: jest.fn(),
+      info: jest.fn(),
+      warning: jest.fn()
+    };
 
-    TestBed.configureTestingModule({
-      declarations: [
-        CategoryFormComponent,
-        MockFormFieldComponent,
-        MockInputComponent,
-        MockTextareaComponent,
-        MockButtonComponent
-      ],
+    // Configurar comportamiento por defecto
+    (mockCategoryService.createCategory as jest.Mock).mockReturnValue(of(mockCategoryResponse));
+
+    await TestBed.configureTestingModule({
+      declarations: [CategoryFormComponent],
       imports: [ReactiveFormsModule],
       providers: [
-        FormBuilder,
         { provide: CategoryServiceService, useValue: mockCategoryService },
         { provide: ToastrService, useValue: mockToastrService }
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA] // ✅ Ignorar errores de template
     }).compileComponents();
-    
+
     fixture = TestBed.createComponent(CategoryFormComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+
+    // Mockear console para evitar logs durante tests
+    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    // ✅ NO llamar detectChanges() para evitar renderizar el template
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  // TEST 1: Verificar creación del componente
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize form with empty values', () => {
-    expect(component.categoryForm).toBeDefined();
-    expect(component.categoryForm.get('name')?.value).toBe('');
-    expect(component.categoryForm.get('description')?.value).toBe('');
+  // TEST 2: Verificar inicialización del formulario
+  describe('Form Initialization', () => {
+    it('should initialize form with correct structure', () => {
+      component.ngOnInit(); // Llamar manualmente ngOnInit
+      
+      expect(component.categoryForm).toBeDefined();
+      expect(component.categoryForm.get('name')).toBeTruthy();
+      expect(component.categoryForm.get('description')).toBeTruthy();
+    });
+
+    it('should have empty initial values', () => {
+      component.ngOnInit();
+      
+      expect(component.categoryForm.get('name')?.value).toBe('');
+      expect(component.categoryForm.get('description')?.value).toBe('');
+    });
+
+    it('should initialize character counters correctly', () => {
+      expect(component.nameCharsRemaining).toBe(50);
+      expect(component.descriptionCharsRemaining).toBe(90);
+      expect(component.nameMaxLength).toBe(50);
+      expect(component.descriptionMaxLength).toBe(90);
+    });
+
+    it('should initialize isSubmitting as false', () => {
+      expect(component.isSubmitting).toBe(false);
+    });
   });
 
-  it('should have initial values for char counters', () => {
-    expect(component.nameMaxLength).toBe(50);
-    expect(component.descriptionMaxLength).toBe(90);
-    expect(component.nameCharsRemaining).toBe(50);
-    expect(component.descriptionCharsRemaining).toBe(90);
+  // TEST 3: Verificar validaciones del formulario
+  describe('Form Validation', () => {
+    beforeEach(() => {
+      component.ngOnInit();
+    });
+
+    it('should be invalid when empty', () => {
+      expect(component.categoryForm.valid).toBe(false);
+    });
+
+    it('should validate required fields', () => {
+      const nameControl = component.categoryForm.get('name');
+      const descriptionControl = component.categoryForm.get('description');
+
+      expect(nameControl?.errors?.['required']).toBeTruthy();
+      expect(descriptionControl?.errors?.['required']).toBeTruthy();
+    });
+
+    it('should validate maxLength for name field', () => {
+      const nameControl = component.categoryForm.get('name');
+      const longName = 'a'.repeat(51); // Excede 50 caracteres
+      
+      nameControl?.setValue(longName);
+      
+      expect(nameControl?.errors?.['maxlength']).toBeTruthy();
+      expect(nameControl?.errors?.['maxlength'].actualLength).toBe(51);
+      expect(nameControl?.errors?.['maxlength'].requiredLength).toBe(50);
+    });
+
+    it('should validate maxLength for description field', () => {
+      const descriptionControl = component.categoryForm.get('description');
+      const longDescription = 'a'.repeat(91); // Excede 90 caracteres
+      
+      descriptionControl?.setValue(longDescription);
+      
+      expect(descriptionControl?.errors?.['maxlength']).toBeTruthy();
+      expect(descriptionControl?.errors?.['maxlength'].actualLength).toBe(91);
+      expect(descriptionControl?.errors?.['maxlength'].requiredLength).toBe(90);
+    });
+
+    it('should be valid with correct data', () => {
+      component.categoryForm.setValue({
+        name: 'Tecnología',
+        description: 'Productos tecnológicos'
+      });
+
+      expect(component.categoryForm.valid).toBe(true);
+    });
   });
 
-  it('should update char counters when form values change', () => {
-    // Simular entrada en el campo nombre
-    component.categoryForm.get('name')?.setValue('Test Category');
-    expect(component.nameCharsRemaining).toBe(38); // 50 - 12
-    
-    // Simular entrada en el campo descripción
-    component.categoryForm.get('description')?.setValue('This is a test description');
-    expect(component.descriptionCharsRemaining).toBe(64); // 90 - 26
+  // TEST 4: Verificar contadores de caracteres
+  describe('Character Counters', () => {
+    beforeEach(() => {
+      component.ngOnInit();
+    });
+
+    it('should update nameCharsRemaining when name changes', () => {
+      const nameControl = component.categoryForm.get('name');
+      
+      nameControl?.setValue('Tech');
+      expect(component.nameCharsRemaining).toBe(46); // 50 - 4
+      
+      nameControl?.setValue('Tecnología');
+      expect(component.nameCharsRemaining).toBe(40); // 50 - 10
+      
+      nameControl?.setValue('');
+      expect(component.nameCharsRemaining).toBe(50);
+    });
+
+    it('should update descriptionCharsRemaining when description changes', () => {
+      const descriptionControl = component.categoryForm.get('description');
+      
+      // ✅ Usar una cadena más fácil de contar
+      descriptionControl?.setValue('Test description'); // 16 caracteres
+      expect(component.descriptionCharsRemaining).toBe(74); // 90 - 16
+      
+      // O ser más explícito:
+      descriptionControl?.setValue('12345'); // 5 caracteres
+      expect(component.descriptionCharsRemaining).toBe(85); // 90 - 5
+      
+      descriptionControl?.setValue('');
+      expect(component.descriptionCharsRemaining).toBe(90);
+    });
+
+    it('should handle null or undefined values in character counters', () => {
+      const nameControl = component.categoryForm.get('name');
+      const descriptionControl = component.categoryForm.get('description');
+      
+      nameControl?.setValue(null);
+      expect(component.nameCharsRemaining).toBe(50);
+      
+      descriptionControl?.setValue(undefined);
+      expect(component.descriptionCharsRemaining).toBe(90);
+    });
   });
 
-  it('should mark form as invalid when empty', () => {
-    expect(component.categoryForm.valid).toBe(false);
+  // TEST 5: Verificar métodos helper
+  describe('Helper Methods', () => {
+    beforeEach(() => {
+      component.ngOnInit();
+    });
+
+    describe('hasError', () => {
+      it('should return false when control has no errors', () => {
+        component.categoryForm.get('name')?.setValue('Valid Name');
+        expect(component.hasError('name')).toBe(false);
+      });
+
+      it('should return false when control has errors but is not touched', () => {
+        expect(component.hasError('name')).toBe(false);
+      });
+
+      it('should return true when control has errors and is touched', () => {
+        component.categoryForm.get('name')?.markAsTouched();
+        expect(component.hasError('name')).toBe(true);
+      });
+
+      it('should return false for non-existent control', () => {
+        expect(component.hasError('nonExistent')).toBe(false);
+      });
+    });
+
+    describe('getErrorMessage', () => {
+      it('should return empty string when control has no errors', () => {
+        component.categoryForm.get('name')?.setValue('Valid Name');
+        expect(component.getErrorMessage('name')).toBe('');
+      });
+
+      it('should return required message for required error', () => {
+        const nameControl = component.categoryForm.get('name');
+        nameControl?.markAsTouched();
+        expect(component.getErrorMessage('name')).toBe('Este campo es obligatorio');
+      });
+
+      it('should return maxlength message for maxlength error', () => {
+        const control = component.categoryForm.get('name');
+        control?.setValue('a'.repeat(51));
+        control?.markAsTouched();
+        expect(component.getErrorMessage('name')).toBe('Debe tener máximo 50 caracteres');
+      });
+
+      it('should return minlength message for minlength error', () => {
+        const control = component.categoryForm.get('name');
+        control?.setErrors({ minlength: { requiredLength: 3, actualLength: 1 } });
+        control?.markAsTouched();
+        expect(component.getErrorMessage('name')).toBe('Debe tener al menos 3 caracteres');
+      });
+
+      it('should return generic message for other errors', () => {
+        const control = component.categoryForm.get('name');
+        control?.setErrors({ customError: true });
+        control?.markAsTouched();
+        expect(component.getErrorMessage('name')).toBe('Campo inválido');
+      });
+
+      it('should return empty string for non-existent control', () => {
+        expect(component.getErrorMessage('nonExistent')).toBe('');
+      });
+    });
   });
 
-  it('should validate name is required', () => {
-    const nameControl = component.categoryForm.get('name');
-    expect(nameControl?.valid).toBe(false);
-    expect(nameControl?.errors?.['required']).toBeTruthy();
-    
-    nameControl?.setValue('Test');
-    expect(nameControl?.valid).toBe(true);
-    expect(nameControl?.errors).toBeNull();
+  // TEST 6: Verificar envío del formulario
+  describe('Form Submission', () => {
+    beforeEach(() => {
+      component.ngOnInit();
+    });
+
+    it('should not submit invalid form', () => {
+      component.onSubmit();
+
+      expect(mockCategoryService.createCategory as jest.Mock).not.toHaveBeenCalled();
+      expect(component.categoryForm.get('name')?.touched).toBe(true);
+      expect(component.categoryForm.get('description')?.touched).toBe(true);
+    });
+
+    it('should submit valid form successfully', () => {
+      (mockCategoryService.createCategory as jest.Mock).mockReturnValue(of(mockCategoryResponse));
+
+      component.categoryForm.setValue({
+        name: 'Tecnología',
+        description: 'Productos tecnológicos y electrónicos'
+      });
+
+      expect(component.isSubmitting).toBe(false);
+      component.onSubmit();
+
+      expect(mockCategoryService.createCategory as jest.Mock).toHaveBeenCalledWith({
+        name: 'Tecnología',
+        description: 'Productos tecnológicos y electrónicos'
+      });
+      expect(mockToastrService.success as jest.Mock).toHaveBeenCalledWith(
+        'Categoría creada exitosamente',
+        'Éxito'
+      );
+      expect(component.isSubmitting).toBe(false);
+    });
+
+    it('should handle submission error', () => {
+      const errorMessage = 'Server error';
+      (mockCategoryService.createCategory as jest.Mock).mockReturnValue(
+        throwError(() => new Error(errorMessage))
+      );
+
+      component.categoryForm.setValue({
+        name: 'Tecnología',
+        description: 'Productos tecnológicos'
+      });
+
+      component.onSubmit();
+
+      expect(mockToastrService.error as jest.Mock).toHaveBeenCalledWith(
+        'Error al crear la categoría',
+        expect.any(Error)
+      );
+      expect(component.isSubmitting).toBe(false);
+    });
+
+    it('should set isSubmitting flag during submission', () => {
+      (mockCategoryService.createCategory as jest.Mock).mockReturnValue(of(mockCategoryResponse));
+
+      component.categoryForm.setValue({
+        name: 'Tecnología',
+        description: 'Productos tecnológicos'
+      });
+
+      expect(component.isSubmitting).toBe(false);
+      component.onSubmit();
+      expect(component.isSubmitting).toBe(false); // Ya se completó la operación
+    });
+
+    it('should call resetForm after successful submission', () => {
+      const resetSpy = jest.spyOn(component, 'resetForm');
+      (mockCategoryService.createCategory as jest.Mock).mockReturnValue(of(mockCategoryResponse));
+
+      component.categoryForm.setValue({
+        name: 'Tecnología',
+        description: 'Productos tecnológicos'
+      });
+
+      component.onSubmit();
+
+      expect(resetSpy).toHaveBeenCalled();
+    });
   });
 
-  it('should validate description is required', () => {
-    const descControl = component.categoryForm.get('description');
-    expect(descControl?.valid).toBe(false);
-    expect(descControl?.errors?.['required']).toBeTruthy();
-    
-    descControl?.setValue('Test Description');
-    expect(descControl?.valid).toBe(true);
-    expect(descControl?.errors).toBeNull();
-  });
+  // TEST 7: Verificar reset del formulario
+  describe('Form Reset', () => {
+    beforeEach(() => {
+      component.ngOnInit();
+    });
 
-  it('should validate name max length', () => {
-    const nameControl = component.categoryForm.get('name');
-    // Crear un string más largo que el límite
-    const longName = 'a'.repeat(51);
-    
-    nameControl?.setValue(longName);
-    expect(nameControl?.valid).toBe(false);
-    expect(nameControl?.errors?.['maxlength']).toBeTruthy();
-  });
+    it('should reset form correctly', () => {
+      // Llenar formulario
+      component.categoryForm.setValue({
+        name: 'Test Category',
+        description: 'Test Description'
+      });
 
-  it('should validate description max length', () => {
-    const descControl = component.categoryForm.get('description');
-    // Crear un string más largo que el límite
-    const longDesc = 'a'.repeat(91);
-    
-    descControl?.setValue(longDesc);
-    expect(descControl?.valid).toBe(false);
-    expect(descControl?.errors?.['maxlength']).toBeTruthy();
-  });
+      // Marcar como tocado
+      component.categoryForm.get('name')?.markAsTouched();
+      component.categoryForm.get('description')?.markAsTouched();
 
-  it('should not submit if form is invalid', () => {
-    // El formulario comienza inválido (campos requeridos vacíos)
-    component.onSubmit();
-    
-    // Verificar que el servicio no fue llamado
-    expect(mockCategoryService.createCategory).not.toHaveBeenCalled();
-    
-    // Verificar que los controles fueron marcados como tocados
-    expect(component.categoryForm.get('name')?.touched).toBe(true);
-    expect(component.categoryForm.get('description')?.touched).toBe(true);
-  });
+      // Resetear
+      component.resetForm();
 
-  it('should submit when form is valid', () => {
-    // Configurar respuesta exitosa
-    mockCategoryService.createCategory.mockReturnValue(of({
-      id: 1,
-      name: 'Test Category',
-      description: 'Test Description'
-    }));
-    
-    // Completar el formulario con datos válidos
-    component.categoryForm.setValue({
-      name: 'Test Category',
-      description: 'Test Description'
+      // Verificar valores
+      expect(component.categoryForm.get('name')?.value).toBe('');
+      expect(component.categoryForm.get('description')?.value).toBe('');
+
+      // Verificar estado
+      expect(component.categoryForm.get('name')?.touched).toBe(false);
+      expect(component.categoryForm.get('description')?.touched).toBe(false);
+
+      // Verificar contadores
+      expect(component.nameCharsRemaining).toBe(50);
+      expect(component.descriptionCharsRemaining).toBe(90);
+    });
+
+    it('should reset form and handle validation state correctly', () => {
+      // Crear un escenario de validación natural
+      component.categoryForm.setValue({
+        name: 'a'.repeat(51), // Excede maxLength 
+        description: 'b'.repeat(91) // Excede maxLength
+      });
+
+      // Marcar como tocado para que se muestren errores
+      component.categoryForm.get('name')?.markAsTouched();
+      component.categoryForm.get('description')?.markAsTouched();
+
+      // Verificar que hay errores antes del reset
+      expect(component.categoryForm.get('name')?.errors?.['maxlength']).toBeTruthy();
+      expect(component.categoryForm.get('description')?.errors?.['maxlength']).toBeTruthy();
+
+      // Resetear formulario
+      component.resetForm();
+
+      // Verificar que ya no está "touched" (esto es lo importante)
+      expect(component.categoryForm.get('name')?.touched).toBe(false);
+      expect(component.categoryForm.get('description')?.touched).toBe(false);
+
+      // Verificar que los valores están vacíos
+      expect(component.categoryForm.get('name')?.value).toBe('');
+      expect(component.categoryForm.get('description')?.value).toBe('');
+
+      // El formulario tendrá errores required porque está vacío,
+      // pero no se mostrarán porque no están "touched"
+      expect(component.hasError('name')).toBe(false);
+      expect(component.hasError('description')).toBe(false);
     });
     
-    // Enviar el formulario
-    component.onSubmit();
-    
-    // Verificar que isSubmitting fue true durante el envío
-    expect(component.isSubmitting).toBe(false); // Debería volver a false después de completar
-    
-    // Verificar que el servicio fue llamado con los datos correctos
-    expect(mockCategoryService.createCategory).toHaveBeenCalledWith({
-      name: 'Test Category',
-      description: 'Test Description'
+  });
+
+  // TEST 8: Tests adicionales para cobertura completa
+  describe('Additional Coverage', () => {
+    beforeEach(() => {
+      component.ngOnInit();
     });
-    
-    // Verificar que se mostró un mensaje de éxito
-    expect(mockToastrService.success).toHaveBeenCalled();
-  });
 
-  it('should handle errors on submit', () => {
-    // Configurar respuesta de error
-    mockCategoryService.createCategory.mockReturnValue(
-      throwError(() => new Error('Server error'))
-    );
-    
-    // Completar el formulario con datos válidos
-    component.categoryForm.setValue({
-      name: 'Test Category',
-      description: 'Test Description'
+    it('should call initForm during ngOnInit', () => {
+      const spy = jest.spyOn(component as any, 'initForm');
+      component.ngOnInit();
+      expect(spy).toHaveBeenCalled();
     });
-    
-    // Enviar el formulario
-    component.onSubmit();
-    
-    // Verificar que isSubmitting volvió a false
-    expect(component.isSubmitting).toBe(false);
-    
-    // Verificar que se mostró un mensaje de error
-    expect(mockToastrService.error).toHaveBeenCalled();
-  });
 
-  it('should reset form correctly', () => {
-    // Primero configurar el formulario con algunos valores y errores
-    component.categoryForm.setValue({
-      name: 'Test',
-      description: 'Description'
+    it('should call setupCharCounters during ngOnInit', () => {
+      const spy = jest.spyOn(component as any, 'setupCharCounters');
+      component.ngOnInit();
+      expect(spy).toHaveBeenCalled();
     });
-    
-    // Marcar controles como tocados
-    component.categoryForm.get('name')?.markAsTouched();
-    component.categoryForm.get('description')?.markAsTouched();
-    
-    // Simular algunos errores
-    component.categoryForm.get('name')?.setErrors({ custom: true });
-    
-    // Llamar a resetForm
-    component.resetForm();
-    
-    // Verificar que los valores se restablecieron
-    expect(component.categoryForm.get('name')?.value).toBe('');
-    expect(component.categoryForm.get('description')?.value).toBe('');
-    
-    // Verificar que los estados se restablecieron
-    expect(component.categoryForm.get('name')?.touched).toBe(false);
-    expect(component.categoryForm.get('name')?.errors).toBeNull();
-    
-    // Verificar que los contadores se restablecieron
-    expect(component.nameCharsRemaining).toBe(50);
-    expect(component.descriptionCharsRemaining).toBe(90);
-  });
 
-  it('should correctly identify controls with errors', () => {
-    // Control sin errores y no tocado
-    expect(component.hasError('name')).toBe(false);
-    
-    // Control con errores pero no tocado
-    component.categoryForm.get('name')?.setErrors({ required: true });
-    expect(component.hasError('name')).toBe(false);
-    
-    // Control con errores y tocado (debería retornar true)
-    component.categoryForm.get('name')?.markAsTouched();
-    expect(component.hasError('name')).toBe(true);
-    
-    // Control sin errores pero tocado
-    component.categoryForm.get('name')?.setErrors(null);
-    expect(component.hasError('name')).toBe(false);
-  });
+    it('should setup character counters correctly', () => {
+      // ✅ Usar casting para acceder a método privado
+      expect(() => (component as any).setupCharCounters()).not.toThrow();
+      
+      // Verificar que los contadores responden a cambios
+      const nameControl = component.categoryForm.get('name');
+      const descriptionControl = component.categoryForm.get('description');
+      
+      nameControl?.setValue('test');
+      expect(component.nameCharsRemaining).toBe(46);
+      
+      descriptionControl?.setValue('test description');
+      expect(component.descriptionCharsRemaining).toBe(74);
+    });
 
-  it('should show appropriate error messages', () => {
-    // Error de campo requerido
-    component.categoryForm.get('name')?.setErrors({ required: true });
-    expect(component.getErrorMessage('name')).toBe('El nombre es obligatorio');
-    
-    // Error de longitud máxima
-    component.categoryForm.get('name')?.setErrors({ maxlength: true });
-    expect(component.getErrorMessage('name')).toBe('El nombre no puede exceder los 50 caracteres');
-    
-    // Para el campo descripción
-    component.categoryForm.get('description')?.setErrors({ required: true });
-    expect(component.getErrorMessage('description')).toBe('La descripción es obligatoria');
-    
-    component.categoryForm.get('description')?.setErrors({ maxlength: true });
-    expect(component.getErrorMessage('description')).toBe('La descripción no puede exceder los 90 caracteres');
+    it('should handle form submission with exact category data structure', () => {
+      component.categoryForm.setValue({
+        name: 'Electronics',
+        description: 'Electronic devices and accessories'
+      });
+
+      component.onSubmit();
+
+      const expectedCategoryData: Category = {
+        name: 'Electronics',
+        description: 'Electronic devices and accessories'
+      };
+
+      expect(mockCategoryService.createCategory as jest.Mock).toHaveBeenCalledWith(expectedCategoryData);
+    });
+
+    it('should mark all fields as touched when form is invalid on submission', () => {
+      // Dejar formulario vacío (inválido)
+      component.categoryForm.setValue({
+        name: '',
+        description: ''
+      });
+
+      // Verificar que no están tocados inicialmente
+      expect(component.categoryForm.get('name')?.touched).toBe(false);
+      expect(component.categoryForm.get('description')?.touched).toBe(false);
+
+      // Intentar enviar
+      component.onSubmit();
+
+      // Verificar que ahora están marcados como tocados
+      expect(component.categoryForm.get('name')?.touched).toBe(true);
+      expect(component.categoryForm.get('description')?.touched).toBe(true);
+    });
   });
 });

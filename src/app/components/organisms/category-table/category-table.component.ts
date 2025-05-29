@@ -40,7 +40,7 @@ export class CategoryTableComponent {
         this.loading = false;
       },
       error: (error) => {
-        console.error('Error al cargar categorías:', error);
+        
         this.loading = false;
       }
     });
@@ -52,7 +52,6 @@ export class CategoryTableComponent {
   }
   
   onCategorySelect(category: Category): void {
-    console.log('Categoría seleccionada:', category);
     // Aquí podrías implementar la edición o vista detalle
   }
 }

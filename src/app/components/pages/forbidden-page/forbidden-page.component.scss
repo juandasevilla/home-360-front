@@ -1,0 +1,107 @@
+.forbidden-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.forbidden-content {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 100%;
+}
+
+.forbidden-icon {
+  font-size: 4rem;
+  color: #e74c3c;
+  margin-bottom: 1.5rem;
+}
+
+.forbidden-title {
+  color: #2c3e50;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.forbidden-message {
+  color: #34495e;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.forbidden-submessage {
+  color: #7f8c8d;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.forbidden-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+  
+  &:hover {
+    background-color: #2980b9;
+  }
+}
+
+.btn-secondary {
+  background-color: #95a5a6;
+  color: white;
+  
+  &:hover {
+    background-color: #7f8c8d;
+  }
+}
+
+@media (max-width: 480px) {
+  .forbidden-content {
+    padding: 2rem 1rem;
+  }
+  
+  .forbidden-title {
+    font-size: 2rem;
+  }
+  
+  .forbidden-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

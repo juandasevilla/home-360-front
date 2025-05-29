@@ -121,8 +121,6 @@ export class ScheduleFormComponent {
       finalDate: `${formValues.finalDate}T${formValues.finalTime}:00`
     };
     
-    console.log('Datos a enviar:', scheduleData);
-    
     this.visitService.createSchedule(scheduleData).subscribe({
       next: (response) => {
         this.isSubmitting = false;

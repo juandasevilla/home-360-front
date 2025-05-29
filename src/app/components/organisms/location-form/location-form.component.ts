@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { Location } from 'src/app/shared/models/Location';
-import { Department } from 'src/app/shared/models/Department';
 import { City } from 'src/app/shared/models/City';
 import { LocationService } from 'src/app/core/location/location.service';
 import { ToastrService } from 'ngx-toastr';
@@ -21,10 +20,6 @@ export class LocationFormComponent {
   nameCharsRemaining: number = this.nameMaxLength;
   descriptionCharsRemaining: number = this.descriptionMaxLength;
 
-  // Listas para los selects
-  departments: Department[] = [];
-  filteredDepartments: Observable<Department[]> = of([]);
-  
   cities: City[] = [];
   filteredCities: Observable<City[]> = of([]);
   
@@ -46,31 +41,6 @@ export class LocationFormComponent {
     
   }
 
-  // Ejemplo: cargar departamentos (esto será reemplazado por llamadas al servicio)
-  private loadDepartments(): void {
-  this.locationService.getDepartments(0, 50).subscribe({
-    next: (response) => {
-      console.log('Departamentos cargados:', response); // Log para depuración
-      
-      if (response && response.content) {
-        this.departments = response.content;
-      } else {
-        console.error('Formato de respuesta inesperado:', response);
-        // Si la respuesta no tiene el formato esperado, intentar usarla directamente
-        if (Array.isArray(response)) {
-          this.departments = response;
-        }
-      }
-      
-      // Actualizar el filtrado después de cargar los datos
-      
-    },
-    error: (error) => {
-      console.error('Error al cargar departamentos:', error);
-    }
-  });
-}
-  
   // Ejemplo: cargar ciudades por departamento (esto será reemplazado por llamadas al servicio)
   private loadCities(): void {
   console.log('Iniciando carga de ciudades...');
@@ -132,7 +102,7 @@ export class LocationFormComponent {
     });
   }
   
-  displayFn(item: Department | City | null): string {
+  displayFn(item:  City | null): string {
     return item ? item.name : '';
   }
   
@@ -158,13 +128,11 @@ export class LocationFormComponent {
     // Implementación real con servicio
     this.locationService.createLocation(locationData).subscribe({
       next: (response) => {
-        console.log('Ubicación creada exitosamente:', response);
         this.isSubmitting = false;
         this.resetForm();
         this.toastr.success('Ubicación creada exitosamente', 'Éxito');
       },
       error: (error) => {
-        console.error('Error al crear la ubicación:', error);
         this.toastr.error('Error al crear la ubicación', error);
         this.isSubmitting = false;
       }

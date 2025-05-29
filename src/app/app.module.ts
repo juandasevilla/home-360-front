@@ -42,6 +42,7 @@ import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { FormsModule } from '@angular/forms';
 import { RealStateTableComponent } from './components/organisms/real-state-table/real-state-table.component';
+import { ForbiddenPageComponent } from './components/pages/forbidden-page/forbidden-page.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { RealStateTableComponent } from './components/organisms/real-state-table
     LoginComponent,
     ScheduleComponent,
     ScheduleFormComponent,
-    RealStateTableComponent
+    RealStateTableComponent,
+    ForbiddenPageComponent
   ],
   imports: [
     BrowserModule,

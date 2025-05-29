@@ -207,9 +207,7 @@ export class UserFormComponent {
 
     this.userService.createUser(userData).subscribe({
       next: (response) => {
-        console.log('Usuario creado exitosamente:', response);
         this.isSubmitting = false;
-        
         // Mostrar mensaje de éxito con Toastr
         this.toastr.success('Usuario creado exitosamente', 'Éxito');
         
@@ -219,7 +217,6 @@ export class UserFormComponent {
         });
       },
       error: (error) => {
-        console.error('Error al crear el usuario:', error);
         this.isSubmitting = false;
         
         // Mostrar mensaje de error con Toastr
