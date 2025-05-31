@@ -31,20 +31,6 @@
   
   <!-- Contenedor para los selects en línea -->
   <div class="location-form__inline-selects">
-    <!-- Selector de Departamento -->
-    <app-form-field
-      label="Departamento"
-      [id]="'location-department'"
-      [required]="true"
-      [errorMessage]="hasError('departmentId') ? getErrorMessage('departmentId') : ''">
-      <select formControlName="departmentId" id="location-department" class="location-form__select">
-        <option [ngValue]="null">Seleccione un departamento</option>
-        <option *ngFor="let department of departments" [ngValue]="department.id">
-          {{ department.name }}
-        </option>
-      </select>
-    </app-form-field>
-    
     <!-- Selector de Ciudad (dependiente del departamento) -->
     <app-form-field
       label="Ciudad"
@@ -58,7 +44,7 @@
         [disabled]="!locationForm.get('departmentId')?.value">
         <option [ngValue]="null">Seleccione una ciudad</option>
         <option *ngFor="let city of cities" [ngValue]="city.id">
-          {{ city.name }}
+          {{ city.name }} / {{ city.department.name }}
         </option>
       </select>
     </app-form-field>

@@ -9,5 +9,5 @@ export interface RealState {
   categoryId: number;        
   publishDate: string;       
   status?: 'available' | 'sold' | 'reserved'; // Estado de la propiedad
-  sellerId?: number;
+  userId?: number;
 }

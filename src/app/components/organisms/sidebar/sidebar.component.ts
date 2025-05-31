@@ -5,7 +5,8 @@ import {
   faBuilding, // Para Propiedades
   faUsers, // Para Usuarios
   faGear, // Para Configuración
-  faLocationDot
+  faLocationDot,
+  faCalendar
 } from '@fortawesome/free-solid-svg-icons';
 import { SidebarMenuItem } from 'src/app/shared/models/SidebarMenuItem';
 
@@ -21,7 +22,8 @@ export class SidebarComponent {
     { icon: faBuilding, title: 'Propiedades', route: '/seller/real-state' },
     { icon: faUsers, title: 'Usuarios', route: '/admin/users' },
     { icon: faGear, title: 'Configuración', route: '/admin/settings' },
-    { icon: faLocationDot, title: 'Ubicación', route: '/admin/location' }
+    { icon: faLocationDot, title: 'Ubicación', route: '/admin/location' },
+    { icon: faCalendar, title: 'Horario', route: '/seller/schedule' }
   ];
 
 }

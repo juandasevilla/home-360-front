@@ -68,13 +68,12 @@ export class CategoryFormComponent implements OnInit {
     // Llamar al servicio para crear la categoría
     this.categoryService.createCategory(categoryData).subscribe({
       next: (response) => {
-        console.log('Categoría creada exitosamente:', response);
         this.isSubmitting = false;
         this.resetForm();
         this.toastr.success('Categoría creada exitosamente', 'Éxito');
       },
       error: (error) => {
-        console.error('Error al crear la categoría:', error);
+        this.toastr.error('Error al crear la categoría', error);
         this.isSubmitting = false;
         // TODO: Mostrar mensaje de error
       }

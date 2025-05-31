@@ -34,7 +34,15 @@ import { ToastrModule } from 'ngx-toastr';
 import { RealStateComponent } from './components/pages/real-state/real-state/real-state.component';
 import { RealStateFormComponent } from './components/organisms/real-state-form/real-state-form.component';
 import { LoginFormComponent } from './components/organisms/login-form/login-form.component';
-import { LoginComponent } from './components/pages/login/login.component'; 
+import { LoginComponent } from './components/pages/login/login.component';
+import { ScheduleComponent } from './components/pages/schedule/schedule.component';
+import { ScheduleFormComponent } from './components/organisms/schedule-form/schedule-form.component'; 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './core/interceptors/token.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { FormsModule } from '@angular/forms';
+import { RealStateTableComponent } from './components/organisms/real-state-table/real-state-table.component';
+import { ForbiddenPageComponent } from './components/pages/forbidden-page/forbidden-page.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +73,11 @@ import { LoginComponent } from './components/pages/login/login.component';
     RealStateComponent,
     RealStateFormComponent,
     LoginFormComponent,
-    LoginComponent
+    LoginComponent,
+    ScheduleComponent,
+    ScheduleFormComponent,
+    RealStateTableComponent,
+    ForbiddenPageComponent
   ],
   imports: [
     BrowserModule,
@@ -79,9 +91,13 @@ import { LoginComponent } from './components/pages/login/login.component';
       positionClass: 'toast-center-center', // Posición (hay varias opciones)
       preventDuplicates: true,          // Evitar mostrar el mismo mensaje varias veces
       closeButton: true,                // Mostrar botón de cerrar
-    })
+    }),
+    FormsModule 
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

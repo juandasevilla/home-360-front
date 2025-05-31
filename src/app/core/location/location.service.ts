@@ -22,14 +22,14 @@ export class LocationService {
   }
   
   // Método para obtener ubicaciones paginadas
-  getLocations(page: number = 0, size: number = 10, orderAsc: boolean = false): Observable<Page<Location>> {
+  getLocations(page: number = 0, size: number = 10, orderAsc: boolean = false, name: string = ''): Observable<Page<Location>> {
     const paginationUrl = `${this.locationApiUrl}/page`;
     
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
       .set('orderAsc', orderAsc.toString())
-      .set('name', '');
+      .set('name', name);
       
     return this.http.get<Page<Location>>(paginationUrl, { params });
   }

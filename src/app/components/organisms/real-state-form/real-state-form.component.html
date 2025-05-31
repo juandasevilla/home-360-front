@@ -93,7 +93,7 @@
       class="real-state-form__select">
       <option [ngValue]="null">Seleccione una Ubicación</option>
       <option *ngFor="let location of locations" [ngValue]="location.id">
-          {{ location.name }}
+          {{ location.name }} / {{ location.city?.name}}
         </option>
     </select>
   </app-form-field>

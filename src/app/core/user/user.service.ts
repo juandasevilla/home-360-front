@@ -2,15 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/models/User';
-import { Login } from 'src/app/shared/models/Login';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = `http://localhost:8080/api/v1/user`;
-  private loginUrl = `http://localhost:8080/api/v1/auth`;
-
+  private apiUrl = `http://localhost:8082/api/v1/user`;
+  
   constructor(private http: HttpClient) { }
 
   /**
@@ -22,12 +21,5 @@ export class UserService {
     return this.http.post<any>(this.apiUrl, userData);
   }
 
-  /**
-   * Inicia sesión de un usuario
-   * @param loginData Datos de inicio de sesión
-   * @returns Observable con la respuesta del servidor
-   */
-  login(loginData: Login): Observable<any> {
-    return this.http.post<any>(`${this.loginUrl}/login`, loginData);
-  }
+  
 }

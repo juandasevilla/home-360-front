@@ -1,0 +1,92 @@
+<div class="real-state-table">
+  <!-- Barra de herramientas -->
+  <div class="real-state-table__toolbar">
+    <button 
+      class="real-state-table__filter-toggle"
+      (click)="toggleFilters()">
+      {{ showFilters ? 'Ocultar filtros' : 'Mostrar filtros' }}
+    </button>
+    
+    <div class="real-state-table__sort">
+      <button 
+        class="real-state-table__sort-button"
+        (click)="toggleSort()">
+        Ordenar: {{ orderAsc ? 'Ascendente ↑' : 'Descendente ↓' }}
+      </button>
+    </div>
+  </div>
+  
+  <!-- Panel de filtros (expandible) -->
+  <div class="real-state-table__filters" *ngIf="showFilters">
+    <form [formGroup]="filterForm" class="real-state-table__filter-form">
+      <div class="real-state-table__filter-row">
+        <div class="real-state-table__filter-field">
+          <label>Categoría</label>
+          <input type="text" formControlName="categoryName" placeholder="Tipo de inmueble">
+        </div>
+        
+        <div class="real-state-table__filter-field">
+          <label>Ubicación</label>
+          <input type="text" formControlName="locationName" placeholder="Nombre de ubicación">
+        </div>
+      </div>
+      
+      <div class="real-state-table__filter-row">
+        <div class="real-state-table__filter-field">
+          <label>Habitaciones</label>
+          <input type="number" formControlName="rooms" min="1" placeholder="Mínimo de habitaciones">
+        </div>
+        
+        <div class="real-state-table__filter-field">
+          <label>Baños</label>
+          <input type="number" formControlName="bathrooms" min="1" placeholder="Mínimo de baños">
+        </div>
+      </div>
+      
+      <div class="real-state-table__filter-row">
+        <div class="real-state-table__filter-field">
+          <label>Precio mínimo</label>
+          <input type="number" formControlName="minPrice" min="0" placeholder="$">
+        </div>
+        
+        <div class="real-state-table__filter-field">
+          <label>Precio máximo</label>
+          <input type="number" formControlName="maxPrice" min="0" placeholder="$">
+        </div>
+      </div>
+      
+      <div class="real-state-table__filter-actions">
+        <button 
+          type="button" 
+          class="real-state-table__filter-apply"
+          (click)="onSearch()">
+          Aplicar filtros
+        </button>
+        
+        <button 
+          type="button" 
+          class="real-state-table__filter-clear"
+          (click)="clearFilters()">
+          Limpiar filtros
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <app-data-table
+    [columns]="columns"
+    [data]="realStates"
+    [loading]="loading"
+    emptyMessage="No hay propiedades disponibles."
+    (rowClick)="onRealStateSelect($event)">
+  </app-data-table>
+  
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    [totalElements]="totalElements"
+    [pageSize]="pageSize"
+    [loading]="loading"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
+</div>
