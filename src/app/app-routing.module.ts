@@ -12,8 +12,12 @@ import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
 import { ForbiddenPageComponent } from './components/pages/forbidden-page/forbidden-page.component';
 import { loginGuard } from './core/guards/login.guard';
+import { HomeComponent } from './components/pages/home/home.component';
+import { PropertyDetailComponent } from './components/pages/property-detail/property-detail.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  
   { 
     path: 'login', 
     component: LoginComponent,
@@ -21,6 +25,8 @@ const routes: Routes = [
   },
   
   { path: 'forbidden', component: ForbiddenPageComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'property/:id', component: PropertyDetailComponent},
 
   // Rutas de administración
   {
@@ -53,7 +59,7 @@ const routes: Routes = [
   },
   
   // Ruta de fallback
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({

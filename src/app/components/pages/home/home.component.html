@@ -1,0 +1,19 @@
+<div class="home-container">
+
+    <!-- Search Bar con título -->
+    <app-search-bar-home
+        [categories]="categories"
+        [isLoading]="isLoading"
+        (search)="onSearch($event)">
+    </app-search-bar-home>
+
+
+    <div class="grid-center">
+        <div class="content">
+            <app-card
+                *ngFor="let realState of realStates" 
+                [realState]="realState">
+            </app-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+@import 'src/styles/variables';
+
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 80px;
+}
+
+.grid-center {
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+/* Responsive - 2 cards en tablets */
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Responsive - 1 card en móviles */
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+  
+  .home-container {
+    padding: 16px;
+  }
+}
