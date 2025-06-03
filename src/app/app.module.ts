@@ -43,6 +43,11 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { FormsModule } from '@angular/forms';
 import { RealStateTableComponent } from './components/organisms/real-state-table/real-state-table.component';
 import { ForbiddenPageComponent } from './components/pages/forbidden-page/forbidden-page.component';
+import { HomeComponent } from './components/pages/home/home.component';
+import { CardComponent } from './components/molecules/card/card.component';
+import { SearchBarHomeComponent } from './components/molecules/search-bar-home/search-bar-home.component';
+import { PropertyDetailComponent } from './components/pages/property-detail/property-detail.component';
+import { VisitCardComponent } from './components/molecules/visit-card/visit-card.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +82,12 @@ import { ForbiddenPageComponent } from './components/pages/forbidden-page/forbid
     ScheduleComponent,
     ScheduleFormComponent,
     RealStateTableComponent,
-    ForbiddenPageComponent
+    ForbiddenPageComponent,
+    HomeComponent,
+    CardComponent,
+    SearchBarHomeComponent,
+    PropertyDetailComponent,
+    VisitCardComponent
   ],
   imports: [
     BrowserModule,

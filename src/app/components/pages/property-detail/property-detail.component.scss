@@ -1,0 +1,508 @@
+@import 'src/styles/variables';
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: white; // ← Fondo blanco
+}
+
+.property-detail-container {
+  width: 100%;
+  min-height: 100vh;
+  margin-top: 80px;
+  background-color: white; // ← Fondo blanco
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - 80px); // ← Ajustado sin navigation
+  gap: 0;
+  background-color: white; // ← Fondo blanco
+}
+
+// SECCIÓN IZQUIERDA - Card de la propiedad (más espacio)
+.property-section {
+  app-card {
+    ::ng-deep .real-state-card {
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 500px !important; // ← Altura mínima forzada
+      max-width: none !important;
+      margin: 0 !important;
+      
+      // Asegurar que la imagen ocupe espacio proporcional
+      .image-section {
+        height: 50% !important; // ← 60% para la imagen
+        
+        img {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: cover !important;
+        }
+      }
+      
+      // Contenido ocupa el resto
+      .content-section {
+        height: 50% !important; // ← 40% para el contenido
+        padding: 10px !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+    }
+  }
+}
+
+// SECCIÓN DERECHA - Horarios de visita
+.visits-section {
+  background: white;
+  padding: 20px; // ← Reducido de 40px
+  overflow-y: auto;
+  max-height: calc(100vh - 80px); // ← Sin navigation
+  border-left: 1px solid #e5e7eb;
+}
+
+.visits-container {
+  max-width: 100%; // ← Cambiado para usar todo el ancho
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+// HEADER DE LA SECCIÓN (más pequeño)
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px; // ← Reducido de 30px
+  padding-bottom: 10px; // ← Reducido
+  border-bottom: 1px solid #f1f5f9; // ← Más sutil
+  
+  h2 {
+    color: $color-text-primary;
+    font-size: 22px; // ← Reducido de 28px
+    font-weight: 600; // ← Reducido peso
+    margin: 0;
+  }
+}
+
+.selected-info {
+  .selected-label {
+    background: $color-blue;
+    color: white;
+    padding: 6px 12px; // ← Más pequeño
+    border-radius: 16px;
+    font-size: 11px; // ← Más pequeño
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+}
+
+// SECCIÓN DE FILTROS (más compacta)
+.filters-section {
+  background: #f8fafc;
+  padding: 16px; // ← Reducido de 24px
+  border-radius: 8px; // ← Más pequeño
+  margin-bottom: 20px; // ← Reducido
+  border: 1px solid #e2e8f0;
+  
+  h3 {
+    color: $color-text-primary;
+    font-size: 14px; // ← Más pequeño
+    font-weight: 600;
+    margin: 0 0 12px 0; // ← Reducido
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    
+    &::before {
+      content: "🔍";
+      font-size: 12px; // ← Más pequeño
+    }
+  }
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px; // ← Reducido
+  margin-bottom: 12px; // ← Reducido
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; // ← Más compacto
+  
+  label {
+    font-weight: 500; // ← Reducido peso
+    color: $color-text-primary;
+    font-size: 12px; // ← Más pequeño
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+}
+
+.date-input {
+  padding: 8px 12px; // ← Más compacto
+  border: 1px solid #e2e8f0; // ← Border más sutil
+  border-radius: 6px; // ← Más pequeño
+  font-size: 13px; // ← Más pequeño
+  background: white;
+  transition: all 0.2s ease;
+  
+  &:focus {
+    outline: none;
+    border-color: $color-blue;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1); // ← Más sutil
+  }
+  
+  &:hover {
+    border-color: #cbd5e1;
+  }
+}
+
+// LISTA DE VISITAS
+.visits-list {
+  flex: 1;
+  margin-bottom: 15px; // ← Reducido
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px; // ← Reducido
+  
+  .loading-spinner {
+    width: 32px; // ← Más pequeño
+    height: 32px;
+    border: 3px solid #f1f5f9;
+    border-top: 3px solid $color-blue;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+  }
+  
+  p {
+    color: $color-text-secondary;
+    font-size: 14px; // ← Más pequeño
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.no-visits {
+  text-align: center;
+  padding: 40px 20px; // ← Reducido
+  background: #fafbfc;
+  border-radius: 12px;
+  border: 2px dashed #e2e8f0;
+  
+  .no-visits-icon {
+    font-size: 48px; // ← Más pequeño
+    margin-bottom: 15px;
+    opacity: 0.5;
+  }
+  
+  h3 {
+    color: $color-text-primary;
+    font-size: 16px; // ← Más pequeño
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  p {
+    color: $color-text-secondary;
+    font-size: 13px; // ← Más pequeño
+    margin: 0;
+    max-width: 250px;
+    margin: 0 auto;
+    line-height: 1.4;
+  }
+}
+
+// GRID DE VISITAS - 2 columnas
+.visits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; // ← 2 columnas
+  gap: 12px; // ← Espacio entre cards
+}
+
+// SECCIÓN DE ACCIÓN (más compacta)
+.action-section {
+  padding: 16px; // ← Reducido
+  background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+  border-radius: 8px; // ← Más pequeño
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  text-align: center;
+  margin-top: 15px; // ← Reducido
+  
+  .selected-visit-info {
+    margin-bottom: 12px; // ← Reducido
+    
+    h4 {
+      color: $color-text-primary;
+      font-size: 14px; // ← Más pequeño
+      font-weight: 600;
+      margin: 0 0 6px 0;
+    }
+    
+    p {
+      color: $color-text-secondary;
+      font-size: 12px; // ← Más pequeño
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+}
+
+// RESPONSIVE DESIGN
+@media (max-width: 1200px) {
+  .visits-section {
+    padding: 15px;
+  }
+  
+  .property-section {
+    padding: 10px;
+  }
+  
+  .visits-grid {
+    grid-template-columns: 1fr; // ← Una columna en pantallas medianas
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  
+  .visits-section {
+    max-height: none;
+    padding: 20px;
+    border-left: none;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .property-section {
+    padding: 15px;
+    
+    app-card {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+  
+  .filters-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .visits-grid {
+    grid-template-columns: 1fr; // ← Una columna en móvil
+  }
+}
+
+@media (max-width: 768px) {
+  .property-detail-container {
+    margin-top: 70px;
+  }
+  
+  .property-section,
+  .visits-section {
+    padding: 15px;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    
+    h2 {
+      font-size: 18px;
+    }
+  }
+  
+  .filters-section {
+    padding: 12px;
+  }
+  
+  .visits-container {
+    max-width: 100%;
+  }
+  
+  .loading-state,
+  .no-visits {
+    padding: 30px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .property-detail-container {
+    margin-top: 60px;
+  }
+  
+  .section-header h2 {
+    font-size: 16px;
+  }
+  
+  .filters-section h3 {
+    font-size: 12px;
+  }
+  
+  .date-input {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+  
+  .action-section {
+    padding: 12px;
+  }
+  
+  .property-section {
+    padding: 10px;
+  }
+}
+
+// ANIMACIONES MÁS SUTILES
+.visits-grid {
+  app-visit-card {
+    animation: fadeInUp 0.2s ease-out; // ← Más rápida
+    animation-fill-mode: both;
+    
+    &:nth-child(1) { animation-delay: 0.05s; }
+    &:nth-child(2) { animation-delay: 0.1s; }
+    &:nth-child(3) { animation-delay: 0.15s; }
+    &:nth-child(4) { animation-delay: 0.2s; }
+    &:nth-child(5) { animation-delay: 0.25s; }
+    &:nth-child(6) { animation-delay: 0.3s; }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px); // ← Movimiento más sutil
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ESTILOS PARA EL COMPONENTE BUTTON (más pequeños)
+.filters-section app-button {
+  align-self: flex-start;
+  font-size: 12px; // ← Más pequeño
+}
+
+.action-section app-button {
+  min-width: 150px; // ← Más pequeño
+  font-size: 13px;
+}
+
+// SCROLL PERSONALIZADO (más sutil)
+.visits-section {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.2) transparent;
+  
+  &::-webkit-scrollbar {
+    width: 4px; // ← Más delgado
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.2);
+    border-radius: 2px;
+    
+    &:hover {
+      background: rgba(59, 130, 246, 0.3);
+    }
+  }
+
+  .datetime-inputs {
+  display: flex;
+  gap: 8px;
+  
+  .date-input {
+    flex: 2;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 13px;
+    background: white;
+    transition: all 0.2s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $color-blue;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+  }
+  
+  .time-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 13px;
+    background: white;
+    transition: all 0.2s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $color-blue;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+  }
+}
+
+.filter-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.active-filters {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  
+  .filter-tag {
+    background: $color-blue;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+}
+
+// Responsive para datetime inputs
+@media (max-width: 768px) {
+  .datetime-inputs {
+    flex-direction: column;
+    gap: 6px;
+    
+    .date-input,
+    .time-input {
+      flex: 1;
+    }
+  }
+  
+  .filter-actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+}

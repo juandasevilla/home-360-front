@@ -1,0 +1,44 @@
+<!-- visit-card.component.html -->
+<div class="visit-card" 
+     [class.selected]="isSelected"
+     [class.disabled]="disabled"
+     [class.past]="getDateStatus() === 'past'"
+     (click)="onSelectVisit()">
+  
+  <!-- Header con estado -->
+  <div class="visit-header">
+    <div class="status-badge" [ngClass]="getDateStatus()">
+      <span *ngIf="getDateStatus() === 'today'">🟢 Hoy</span>
+      <span *ngIf="getDateStatus() === 'tomorrow'">🟡 Mañana</span>
+      <span *ngIf="getDateStatus() === 'future'">🔵 Próximo</span>
+      <span *ngIf="getDateStatus() === 'past'">🔴 Pasado</span>
+    </div>
+    
+    <div class="selection-indicator" *ngIf="isSelected">
+      ✓ Seleccionado
+    </div>
+  </div>
+
+  <!-- Información principal -->
+  <div class="visit-info">
+    <div class="date-section">
+      <div class="date-icon">📅</div>
+      <div class="date-details">
+        <div class="date-text">{{ formatDate(visit.initialDate) }}</div>
+        <div class="time-range">
+          {{ formatTime(visit.initialDate) }} - {{ formatTime(visit.finalDate) }}
+        </div>
+      </div>
+    </div>
+
+    <div class="duration-section">
+      <div class="duration-icon">⏱️</div>
+      <div class="duration-text">{{ getDuration() }}</div>
+    </div>
+  </div>
+
+  <!-- Footer con ID -->
+  <div class="visit-footer">
+    <span class="visit-id">ID: {{ visit.id }}</span>
+  </div>
+</div>

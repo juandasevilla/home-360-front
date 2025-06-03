@@ -1,0 +1,51 @@
+<div class="search-container">
+  
+  <!-- Título principal -->
+  <div class="search-title">
+    <h1>Encuentra tu casa perfecta</h1>
+  </div>
+
+  <!-- Barra de búsqueda -->
+  <div class="search-bar">
+    
+    <!-- Selector de categorías -->
+    <div class="search-field">
+      <select
+        id="category"
+        class="select-field"
+        [value]="selectedCategoryName || ''"
+        [disabled]="isLoading"
+        (change)="onCategoryChange($event)">
+        <option value="">Todas las categorías</option>
+        <option 
+          *ngFor="let category of categories" 
+          [value]="category.name">
+          {{ category.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Input de ciudad -->
+    <div class="search-field">
+      <app-input
+        id="location"
+        type="text"
+        placeholder="Buscar por ciudad..."
+        [(ngModel)]="locationName"
+        (valueChange)="onLocationInputChange($event)">
+      </app-input>
+    </div>
+
+    <!-- Botón de búsqueda -->
+    <div class="search-button">
+      <app-button
+        [text]="isLoading ? 'Buscando...' : 'Buscar'"
+        [type]="'button'"
+        [buttonStyle]="'primary'"
+        [disabled]="isLoading"
+        (buttonClick)="onSearch()">
+      </app-button>
+    </div>
+
+  </div>
+</div>

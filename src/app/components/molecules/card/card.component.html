@@ -1,0 +1,23 @@
+<div class="real-state-card" (click)="onCardClick()" [style.cursor]="'pointer'">
+    <!-- Imagen (mitad superior) -->
+    <div class="image-section">
+        <img [src]="realState?.imageUrl || 'assets/images/img.svg'" [alt]="realState?.name">
+    </div>
+    
+    <!-- Contenido (mitad inferior) -->
+    <div class="content-section">
+        <h3>{{ realState?.name }}</h3>
+        <p class="city">{{ realState?.location.city.name }}</p>
+        <p class="price">${{ realState?.price | number:'1.0-0' }}</p>
+        
+        <!-- Iconos en la misma línea -->
+        <div class="features">
+            <span class="feature">
+                🛏️ {{ realState?.rooms }}
+            </span>
+            <span class="feature">
+                🚿 {{ realState?.bathrooms }}
+            </span>
+        </div>
+    </div>
+</div>
