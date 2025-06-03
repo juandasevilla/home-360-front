@@ -1,9 +1,146 @@
 <div class="property-detail-container">
-    <div class="grid-center">
-        <div class="content">
-            <app-card
-                [realState]="realState">
-            </app-card>
-        </div>
+  
+  <!-- Layout principal 50/50 -->
+  <div class="main-content">
+    
+    <!-- Mitad izquierda: Card de la propiedad -->
+    <div class="property-section">
+      <app-card [realState]="realState"></app-card>
     </div>
+    
+    <!-- Mitad derecha: Horarios de visita -->
+    <div class="visits-section">
+      <div class="visits-container">
+        
+        <div class="section-header">
+          <h2>Horarios disponibles</h2>
+          <div class="selected-info" *ngIf="selectedVisit">
+            <span class="selected-label">✓ Horario seleccionado</span>
+          </div>
+        </div>
+        
+        <!-- Filtros -->
+        <div class="filters-section">
+          <h3>Filtrar por fecha y hora</h3>  <!-- ← CAMBIO: agregar "y hora" -->
+  
+          <div class="filters-grid">
+            <!-- Filtro DESDE -->
+            <div class="filter-group">
+              <label>Desde:</label>
+              <div class="datetime-inputs">  <!-- ← NUEVO: contenedor para fecha y hora -->
+                <input 
+                  type="date" 
+                  [(ngModel)]="filterInitialDate"
+                  (change)="onInitialDateChange()"
+                  class="date-input"
+                  placeholder="Fecha desde">
+                <input                        
+                  type="time" 
+                  [(ngModel)]="filterInitialTime"
+                  (change)="onInitialTimeChange()"
+                  class="time-input">
+              </div>
+            </div>
+            
+            <!-- Filtro HASTA -->
+            <div class="filter-group">
+              <label>Hasta:</label>
+              <div class="datetime-inputs">  <!-- ← NUEVO: contenedor para fecha y hora -->
+                <input 
+                  type="date" 
+                  [(ngModel)]="filterFinalDate"
+                  (change)="onFinalDateChange()"
+                  class="date-input"
+                  placeholder="Fecha hasta">
+                <input                      
+                  type="time" 
+                  [(ngModel)]="filterFinalTime"
+                  (change)="onFinalTimeChange()"
+                  class="time-input">
+              </div>
+            </div>
+          </div>
+          
+          <!-- Botones de acción -->
+          <div class="filter-actions">      <!-- ← NUEVO: contenedor para botones -->
+            <!-- Aplicar filtros manualmente -->
+            <app-button
+              *ngIf="(filterInitialDate && filterFinalDate) && !isLoading"
+              text="Aplicar filtros"
+              buttonStyle="primary"
+              (buttonClick)="onApplyFilters()">
+            </app-button>
+            
+            <!-- Limpiar filtros -->
+            <app-button
+              *ngIf="filterInitialDate || filterFinalDate"
+              text="Limpiar"
+              buttonStyle="secondary"
+              (buttonClick)="clearFilters()">
+            </app-button>
+          </div>
+          
+          <!-- Indicador de filtros activos -->  <!-- ← NUEVO: mostrar filtros activos -->
+          <div class="active-filters" *ngIf="filterInitialDate || filterFinalDate">
+            <span class="filter-tag" *ngIf="filterInitialDate">
+              Desde: {{ filterInitialDate | date:'dd/MM/yyyy' }} {{ filterInitialTime }}
+            </span>
+            <span class="filter-tag" *ngIf="filterFinalDate">
+              Hasta: {{ filterFinalDate | date:'dd/MM/yyyy' }} {{ filterFinalTime }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Lista de visitas -->
+        <div class="visits-list">
+          
+          <!-- Estado de carga -->
+          <div *ngIf="isLoading" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Cargando horarios...</p>
+          </div>
+
+          <!-- Sin resultados -->
+          <div *ngIf="!isLoading && visits.length === 0" class="no-visits">
+            <div class="no-visits-icon">📅</div>
+            <h3>No hay horarios disponibles</h3>
+            <p>No se encontraron horarios para esta propiedad.</p>
+          </div>
+          
+          <!-- Cards de visitas -->
+          <div *ngIf="!isLoading && visits.length > 0" class="visits-grid">
+            <app-visit-card
+              *ngFor="let visit of visits"
+              [visit]="visit"
+              [isSelected]="isVisitSelected(visit)"
+              [disabled]="isVisitDisabled(visit)"
+              (visitSelected)="onVisitSelected($event)">
+            </app-visit-card>
+          </div>
+        </div>
+
+        <!-- Paginación -->
+        <app-pagination
+          *ngIf="!isLoading && totalPages > 1"
+          [currentPage]="currentPage"
+          [totalPages]="totalPages"
+          [totalElements]="totalElements"
+          [pageSize]="pageSize"
+          [loading]="isLoading"
+          (pageChange)="onPageChange($event)">
+        </app-pagination>
+
+        <!-- Botón de confirmación usando tu componente -->
+        <div class="action-section" *ngIf="selectedVisit">
+          <app-button
+            text="Agendar"
+            buttonStyle="primary"
+            (buttonClick)="onConfirmVisit()">
+          </app-button>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
 </div>

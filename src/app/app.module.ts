@@ -47,6 +47,7 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { CardComponent } from './components/molecules/card/card.component';
 import { SearchBarHomeComponent } from './components/molecules/search-bar-home/search-bar-home.component';
 import { PropertyDetailComponent } from './components/pages/property-detail/property-detail.component';
+import { VisitCardComponent } from './components/molecules/visit-card/visit-card.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { PropertyDetailComponent } from './components/pages/property-detail/prop
     HomeComponent,
     CardComponent,
     SearchBarHomeComponent,
-    PropertyDetailComponent
+    PropertyDetailComponent,
+    VisitCardComponent
   ],
   imports: [
     BrowserModule,
