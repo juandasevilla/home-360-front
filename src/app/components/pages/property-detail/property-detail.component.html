@@ -130,7 +130,7 @@
           (pageChange)="onPageChange($event)">
         </app-pagination>
 
-        <!-- Botón de confirmación usando tu componente -->
+        <!-- Botón de confirmación  -->
         <div class="action-section" *ngIf="selectedVisit">
           <app-button
             text="Agendar"
@@ -144,3 +144,15 @@
     
   </div>
 </div>
+
+<app-modal 
+  [isOpen]="showVisitModal"
+  [showCloseButton]="true"
+  (closeModal)="onCloseModal()">
+  
+  <app-visit-form
+    [selectedVisit]="selectedVisit"
+    (formSubmitted)="onVisitConfirmed()"
+    (formCancelled)="onCloseModal()">
+  </app-visit-form>
+</app-modal>

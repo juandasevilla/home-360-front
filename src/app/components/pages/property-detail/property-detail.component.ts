@@ -19,6 +19,7 @@ export class PropertyDetailComponent {
   totalElements: number = 0;
   pageSize: number = 10;
   isLoading: boolean = false;
+  showVisitModal: boolean = false;
   
   // Filtros
   filterInitialDate: string = '';
@@ -259,21 +260,28 @@ export class PropertyDetailComponent {
   }
 
   /**
-   * Confirmar visita seleccionada
-   */
-  onConfirmVisit(): void {
-    if (this.selectedVisit) {
-      console.log('Confirmar visita:', this.selectedVisit);
-      alert(`Visita confirmada para el ${new Date(this.selectedVisit.initialDate).toLocaleDateString('es-ES')}`);
-    }
-  }
-
-  /**
    * Volver al home
    */
   goBack(): void {
     this.router.navigate(['/home']);
   }
 
+  onConfirmVisit(): void {
+    if (this.selectedVisit) {
+      this.showVisitModal = true;
+    } else {
+      console.error('No hay visita seleccionada');
+    }
+  }
+
+  onCloseModal(): void {
+    this.showVisitModal = false;
+  }
+
+  onVisitConfirmed(): void {
+    this.showVisitModal = false;
+    this.selectedVisit = null;
+    this.loadInitialVisits(); 
+  }
 
 }

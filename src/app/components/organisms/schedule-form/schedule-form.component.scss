@@ -43,6 +43,8 @@
     font-size: 14px !important;
     color: $color-text-primary !important;
     background-color: $color-white !important;
+    box-sizing: border-box; 
+
     
     &:focus {
       outline: none !important;

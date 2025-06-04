@@ -1,0 +1,69 @@
+@import 'src/styles/variables';
+
+.visit-form {
+  padding: 24px;
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto; // ← Centrar el formulario horizontalmente
+  text-align: center;
+  
+  &__header {
+    text-align: center;
+    margin-bottom: 24px;
+    
+    h2 {
+      color: $color-text-primary;
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+    }
+  }
+  
+  .visit-info {
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    margin-bottom: 8px;
+    
+    p {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: $color-text-primary;
+      
+      &.visit-date {
+        margin-bottom: 4px;
+      }
+    }
+  }
+  
+  &__actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    justify-content: center;
+    
+    app-button {
+      flex: 1;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .visit-form {
+    padding: 20px;
+    
+    &__header h2 {
+      font-size: 20px;
+    }
+    
+    &__actions {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+}

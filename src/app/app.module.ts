@@ -48,6 +48,8 @@ import { CardComponent } from './components/molecules/card/card.component';
 import { SearchBarHomeComponent } from './components/molecules/search-bar-home/search-bar-home.component';
 import { PropertyDetailComponent } from './components/pages/property-detail/property-detail.component';
 import { VisitCardComponent } from './components/molecules/visit-card/visit-card.component';
+import { VisitFormComponent } from './components/organisms/visit-form/visit-form.component';
+import { ModalComponent } from './components/molecules/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +89,9 @@ import { VisitCardComponent } from './components/molecules/visit-card/visit-card
     CardComponent,
     SearchBarHomeComponent,
     PropertyDetailComponent,
-    VisitCardComponent
+    VisitCardComponent,
+    VisitFormComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

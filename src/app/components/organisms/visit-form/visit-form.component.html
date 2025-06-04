@@ -1,0 +1,45 @@
+<form [formGroup]="visitForm" (ngSubmit)="onSubmit()" class="visit-form">
+  
+  <!-- Header del formulario -->
+  <div class="visit-form__header">
+    <h2>Confirmar Visita</h2>
+    <div class="visit-info" *ngIf="selectedVisit">
+      <p class="visit-date">
+        📅 {{ selectedVisit.initialDate | date:'EEEE, dd/MM/yyyy' }}
+      </p>
+      <p class="visit-time">
+        ⏰ {{ selectedVisit.initialDate | date:'HH:mm' }} - {{ selectedVisit.finalDate | date:'HH:mm' }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Campo de email usando tu form-field -->
+  <app-form-field
+    id="email"
+    label="Correo electrónico"
+    [required]="true"
+    [errorMessage]="hasError('email') ? getErrorMessage('email') : ''"
+    >
+    
+    <app-input
+      id="email"
+      type="email"
+      placeholder="tu-email@ejemplo.com"
+      formControlName="email"
+      [required]="true"
+      [hasError]="hasError('email')"
+    >
+    </app-input>
+  </app-form-field>
+
+  <!-- Botones de acción -->
+  <div class="visit-form__actions">
+    <app-button
+      [text]="isSubmitting ? 'Confirmando...' : 'Confirmar Visita'"
+      buttonStyle="primary"
+      type="submit"
+      [disabled]="isSubmitting || visitForm.invalid">
+    </app-button>
+  </div>
+
+</form>
