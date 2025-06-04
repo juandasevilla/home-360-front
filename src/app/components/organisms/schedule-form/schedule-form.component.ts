@@ -23,8 +23,8 @@ export class ScheduleFormComponent {
     private toastr: ToastrService,
     private realStateService: RealStateService,
   ) {
-    // Establecer fecha mínima como hoy
     const today = new Date();
+    today.setDate(today.getDate() + 1); 
     this.minScheduleDate = today.toISOString().split('T')[0];
 
     const maxDate = new Date();
@@ -67,6 +67,7 @@ export class ScheduleFormComponent {
 
     const inputDate = new Date(control.value);
     const today = new Date();
+    today.setDate(today.getDate() + 1); // Mínimo un día después de hoy
     today.setHours(0, 0, 0, 0); // Resetear horas para comparar solo fechas
 
     if (inputDate < today) {

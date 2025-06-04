@@ -40,4 +40,8 @@ export class VisitService {
 
     return this.http.get<VisitResponse>(this.apiUrl, { params });
   }
+
+  confirmVisit(payload: { schedule: Schedule, email: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/visit`, payload);
+  }
 }

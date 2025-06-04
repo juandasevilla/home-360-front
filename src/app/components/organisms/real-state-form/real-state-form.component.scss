@@ -5,7 +5,7 @@
   
   &__actions {
     display: flex;
-    justify-content: flex-end; // Esto alineará el botón a la derecha
+    justify-content: flex-end; // alineará el botón a la derecha
     margin-top: 24px;
   }
 
@@ -40,6 +40,7 @@
       border: 1px solid #ced4da;
       border-radius: 4px;
       font-size: 1rem;
+      box-sizing: border-box;
       
       &:focus {
         border-color: #80bdff;
