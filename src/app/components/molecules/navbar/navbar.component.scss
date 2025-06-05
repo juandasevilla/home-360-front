@@ -10,6 +10,7 @@
   &__left {
     display: flex;
     align-items: center;
+    margin-left: -80px;
   }
   
   &__logo {
@@ -26,6 +27,7 @@
     width: 390.91px;
     height: 40px;
     justify-content: flex-end;
+    margin-right: -80px;
   }
   
   &__links {
@@ -170,6 +172,14 @@
     &__dropdown {
       right: 0;
       min-width: 180px;
+    }
+
+    &__left {
+      margin-left: -5px; 
+    }
+
+    &__right {
+      margin-right: -5px; 
     }
   }
 }

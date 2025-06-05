@@ -11,6 +11,22 @@
       <tr *ngFor="let item of data" (click)="onRowClick(item)" class="data-table__row">
         <td *ngFor="let column of columns">
           {{ getPropertyValue(item, column.key) }}
+
+          <div *ngIf="isActionsColumn(column.key)" class="actions-cell">
+            <button 
+              class="action-btn edit-btn"
+              (click)="onEditClick(item, $event)"
+              title="Editar">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+            
+            <button 
+              class="action-btn delete-btn"
+              (click)="onDeleteClick(item, $event)"
+              title="Eliminar">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </div>
         </td>
       </tr>
     </tbody>

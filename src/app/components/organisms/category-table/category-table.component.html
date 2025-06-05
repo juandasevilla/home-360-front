@@ -4,7 +4,10 @@
     [data]="categories"
     [loading]="loading"
     emptyMessage="No hay categorías disponibles."
-    (rowClick)="onCategorySelect($event)">
+    (rowClick)="onCategorySelect($event)"
+    (editClick)="onEditCategory($event)"
+    (deleteClick)="onDeleteCategory($event)">
+    >
   </app-data-table>
   
   <app-pagination

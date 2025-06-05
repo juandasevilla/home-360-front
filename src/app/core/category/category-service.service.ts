@@ -34,4 +34,9 @@ export class CategoryServiceService {
     console.log('Consultando categorías con URL:', paginationUrl);
     return this.http.get<Page<Category>>(paginationUrl, { params });
   }
+
+  deleteCategory(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
+

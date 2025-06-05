@@ -3,6 +3,7 @@ import { Category } from 'src/app/shared/models/Category';
 import { TableColumn } from 'src/app/shared/models/TableColumn';
 import { CategoryServiceService } from 'src/app/core/category/category-service.service';
 import { Page } from 'src/app/shared/models/Page';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-category-table',
@@ -14,6 +15,7 @@ export class CategoryTableComponent {
     { key: 'id', header: 'ID', width: '80px' },
     { key: 'name', header: 'Nombre', width: '25%' },
     { key: 'description', header: 'Descripción' },
+    { key: 'actions', header: 'Acciones'}, 
   ];
   
   categories: Category[] = [];
@@ -23,7 +25,9 @@ export class CategoryTableComponent {
   totalElements: number = 0;
   pageSize: number = 10;
   
-  constructor(private categoryService: CategoryServiceService) {}
+  constructor(private categoryService: CategoryServiceService,
+              private toastr: ToastrService
+  ) {}
   
   ngOnInit(): void {
     this.loadCategories();
@@ -53,6 +57,23 @@ export class CategoryTableComponent {
   
   onCategorySelect(category: Category): void {
     // Aquí podrías implementar la edición o vista detalle
+  }
+
+  onDeleteCategory(category: Category): void {
+    if (confirm(`¿Estás seguro de que deseas eliminar la categoría "${category.name}"?`)) {
+      this.categoryService.deleteCategory(category.id!).subscribe({
+        next: () => {
+          this.toastr.success('Categoría eliminada correctamente');
+          this.loadCategories();
+        },
+        error: (error) => {
+          this.toastr.error('Error al eliminar la categoría');
+        }
+      });
+    }
+  }
+  onEditCategory(category: Category): void {
+    console.log('Edit category:', category);
   }
 }
 
