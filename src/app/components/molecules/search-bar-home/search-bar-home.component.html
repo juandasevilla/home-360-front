@@ -1,51 +1,134 @@
 <div class="search-container">
   
-  <!-- Título principal -->
-  <div class="search-title">
-    <h1>Encuentra tu casa perfecta</h1>
-  </div>
-
-  <!-- Barra de búsqueda -->
-  <div class="search-bar">
+  <!-- Header con título y botón de filtros -->
+  <div class="search-header">
+    <div class="search-title">
+      <h1>Encuentra tu casa perfecta</h1>
+    </div>
     
-    <!-- Selector de categorías -->
-    <div class="search-field">
-      <select
-        id="category"
-        class="select-field"
-        [value]="selectedCategoryName || ''"
-        [disabled]="isLoading"
-        (change)="onCategoryChange($event)">
-        <option value="">Todas las categorías</option>
-        <option 
-          *ngFor="let category of categories" 
-          [value]="category.name">
-          {{ category.name }}
-        </option>
-      </select>
-    </div>
-
-    <!-- Input de ciudad -->
-    <div class="search-field">
-      <app-input
-        id="location"
-        type="text"
-        placeholder="Buscar por ciudad..."
-        [(ngModel)]="locationName"
-        (valueChange)="onLocationInputChange($event)">
-      </app-input>
-    </div>
-
-    <!-- Botón de búsqueda -->
-    <div class="search-button">
+    <!-- Botón de filtros en esquina superior -->
+    <div class="filters-toggle">
       <app-button
-        [text]="isLoading ? 'Buscando...' : 'Buscar'"
+        [text]="showAdvancedFilters ? 'Menos filtros' : 'Más filtros'"
         [type]="'button'"
-        [buttonStyle]="'primary'"
-        [disabled]="isLoading"
-        (buttonClick)="onSearch()">
+        [buttonStyle]="'secondary'"
+        (buttonClick)="toggleAdvancedFilters()">
       </app-button>
     </div>
-
   </div>
+
+  <form [formGroup]="searchForm" class="search-form">
+    
+    <!-- Barra de búsqueda principal (SIN botón de filtros) -->
+    <div class="search-bar">
+      
+      <!-- Selector de categorías -->
+      <div class="search-field">
+        <select
+          id="category"
+          class="select-field"
+          formControlName="categoryName"
+          [disabled]="isLoading">
+          <option value="">Todas las categorías</option>
+          <option 
+            *ngFor="let category of categories" 
+            [value]="category.name">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Input de ciudad -->
+      <div class="search-field">
+        <app-input
+          id="location"
+          type="text"
+          placeholder="Buscar por ciudad..."
+          formControlName="locationName">
+        </app-input>
+      </div>
+
+      <!-- Botón de búsqueda (mantiene su posición) -->
+      <div class="search-button">
+        <app-button
+          [text]="isLoading ? 'Buscando...' : 'Buscar'"
+          [type]="'button'"
+          [buttonStyle]="'primary'"
+          [disabled]="isLoading"
+          (buttonClick)="onSearch()">
+        </app-button>
+      </div>
+
+    </div>
+
+    <!-- Panel de filtros avanzados (desplegable) -->
+    <div class="advanced-filters" *ngIf="showAdvancedFilters">
+      
+      <div class="advanced-filters__header">
+        <button 
+          type="button" 
+          class="clear-filters-btn"
+          *ngIf="hasActiveAdvancedFilters()"
+          (click)="clearAdvancedFilters()">
+          Limpiar filtros
+        </button>
+      </div>
+
+      <div class="advanced-filters__grid">
+        
+        <!-- Habitaciones -->
+        <div class="filter-field">
+          <label for="rooms">Habitaciones</label>
+          <app-input
+            id="rooms"
+            type="number"
+            placeholder="Mín. habitaciones"
+            formControlName="rooms">
+          </app-input>
+        </div>
+        
+        <!-- Baños -->
+        <div class="filter-field">
+          <label for="bathrooms">Baños</label>
+          <app-input
+            id="bathrooms"
+            type="number"
+            placeholder="Mín. baños"
+            formControlName="bathrooms">
+          </app-input>
+        </div>
+        
+        <!-- Precio mínimo -->
+        <div class="filter-field">
+          <label for="minPrice">Precio mínimo</label>
+          <app-input
+            id="minPrice"
+            type="number"
+            placeholder="$0"
+            formControlName="minPrice">
+          </app-input>
+        </div>
+        
+        <!-- Precio máximo -->
+        <div class="filter-field">
+          <label for="maxPrice">Precio máximo</label>
+          <app-input
+            id="maxPrice"
+            type="number"
+            placeholder="$999,999"
+            formControlName="maxPrice">
+          </app-input>
+        </div>
+
+      </div>
+
+      <!-- Indicador de filtros activos -->
+      <div class="active-filters" *ngIf="hasActiveAdvancedFilters()">
+        <span class="active-filters__label">Filtros activos:</span>
+        <span class="active-filters__count">{{ getActiveFiltersCount() }}</span>
+      </div>
+
+    </div>
+
+  </form>
 </div>

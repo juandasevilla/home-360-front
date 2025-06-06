@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SearchCriteria } from 'src/app/shared/models/SearchCriteria';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-search-bar-home',
@@ -12,26 +13,66 @@ export class SearchBarHomeComponent {
 
   @Output() search = new EventEmitter<SearchCriteria>();
 
-  selectedCategoryName?: string = '';
-  locationName?: string = '';
+  searchForm: FormGroup;
+  showAdvancedFilters: boolean = false;
+
+  constructor(private fb: FormBuilder) {
+    this.searchForm = this.fb.group({
+      categoryName: [''],
+      locationName: [''],
+      rooms: [null],
+      bathrooms: [null],
+      minPrice: [null],
+      maxPrice: [null]
+    });
+  }
 
   onSearch(): void {
-    const criteria: SearchCriteria = {
-      categoryName: this.selectedCategoryName,
-      locationName: this.locationName
-    };
+    const formValues = this.searchForm.value;
+    
+    const criteria: SearchCriteria = {};
+    
+    if (formValues.categoryName) criteria.categoryName = formValues.categoryName;
+    if (formValues.locationName) criteria.locationName = formValues.locationName;
+    if (formValues.rooms) criteria.rooms = formValues.rooms;
+    if (formValues.bathrooms) criteria.bathrooms = formValues.bathrooms;
+    if (formValues.minPrice) criteria.minPrice = formValues.minPrice;
+    if (formValues.maxPrice) criteria.maxPrice = formValues.maxPrice;
+    
     this.search.emit(criteria);
   }
 
-  onCategoryChange(event: any): void {
-    const value = event.target.value;
-    this.selectedCategoryName = value ? value : undefined;
+  toggleAdvancedFilters(): void {
+    this.showAdvancedFilters = !this.showAdvancedFilters;
   }
 
-  onLocationInputChange(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    this.locationName = inputElement.value;
-    console.log('Location changed:', this.locationName);
+  // ← AGREGAR: Limpiar filtros avanzados
+  clearAdvancedFilters(): void {
+    this.searchForm.patchValue({
+      rooms: null,
+      bathrooms: null,
+      minPrice: null,
+      maxPrice: null
+    });
+    this.onSearch(); // Aplicar inmediatamente
   }
+
+  // ← AGREGAR: Verificar si hay filtros avanzados activos
+  hasActiveAdvancedFilters(): boolean {
+    const values = this.searchForm.value;
+    return !!(values.rooms || values.bathrooms || values.minPrice || values.maxPrice);
+  }
+
+  getActiveFiltersCount(): number {
+  const values = this.searchForm.value;
+  let count = 0;
+  
+  if (values.rooms) count++;
+  if (values.bathrooms) count++;
+  if (values.minPrice) count++;
+  if (values.maxPrice) count++;
+  
+  return count;
+}
 
 }

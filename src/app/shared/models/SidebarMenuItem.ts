@@ -4,4 +4,5 @@ export interface SidebarMenuItem {
   icon: IconDefinition;
   title: string;
   route: string;
+  roles: string[]; 
 }

@@ -121,3 +121,60 @@
     gap: 16px;
   }
 }
+
+.advanced-filters {
+  background: white;
+  border: none;
+  border-radius: 0px;
+  margin-top: 12px; // ← Menos espacio arriba
+  padding: 16px;    // ← Menos padding
+  box-shadow: none; // ← Sombra más sutil
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px; // ← Menos espacio
+    
+    h3 {
+      margin: 0;
+      font-size: 14px;     // ← Más pequeño
+      font-weight: 600;
+      color: $color-text-primary;
+    }
+    
+    .clear-filters-btn {
+      background: none;
+      border: none;
+      color: $color-blue;
+      font-size: 12px;     // ← Más pequeño
+      cursor: pointer;
+      padding: 4px 8px;    // ← Padding compacto
+      border-radius: 4px;
+      
+      &:hover {
+        background-color: rgba(59, 130, 246, 0.1);
+        color: darken($color-blue, 10%);
+      }
+    }
+  }
+  
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); // ← 4 columnas en línea
+    gap: 12px;    // ← Gap más pequeño
+    
+    .filter-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;     // ← Gap más pequeño
+      
+      label {
+        font-size: 12px;   // ← Más pequeño
+        font-weight: 500;
+        color: $color-text-secondary;
+        margin-bottom: 2px; // ← Menos espacio
+      }
+    }
+  }
+}
