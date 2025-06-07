@@ -34,19 +34,15 @@ export class LocationFormComponent {
     this.setupCharCounters();
     this.setupFilters();
     
-    // Cargar los departamentos al iniciar
+    // Cargar ciudades al iniciar
     this.loadCities();
-    
-    // Observador para cambios en el departamento seleccionado
-    
   }
 
-  // Ejemplo: cargar ciudades por departamento (esto será reemplazado por llamadas al servicio)
   private loadCities(): void {
   console.log('Iniciando carga de ciudades...');
   this.locationService.getCities(0, 50).subscribe({
     next: (response) => {
-      console.log('Ciudades cargadas:', response); // Log para depuración
+      console.log('Ciudades cargadas:', response); 
       
       if (response && response.content) {
         this.cities = response.content;
@@ -125,7 +121,6 @@ export class LocationFormComponent {
       cityId: this.locationForm.value.cityId
     };
 
-    // Implementación real con servicio
     this.locationService.createLocation(locationData).subscribe({
       next: (response) => {
         this.isSubmitting = false;

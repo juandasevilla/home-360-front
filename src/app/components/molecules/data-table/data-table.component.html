@@ -13,12 +13,7 @@
           {{ getPropertyValue(item, column.key) }}
 
           <div *ngIf="isActionsColumn(column.key)" class="actions-cell">
-            <button 
-              class="action-btn edit-btn"
-              (click)="onEditClick(item, $event)"
-              title="Editar">
-              <fa-icon [icon]="faEdit"></fa-icon>
-            </button>
+            
             
             <button 
               class="action-btn delete-btn"

@@ -72,8 +72,6 @@ export class CategoryTableComponent {
       });
     }
   }
-  onEditCategory(category: Category): void {
-    console.log('Edit category:', category);
-  }
+  
 }
 

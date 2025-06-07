@@ -3,6 +3,8 @@
   [ngClass]="buttonStyle"
   [type]="type" 
   (click)="onClick()" 
-  [disabled]="disabled">
+  [disabled]="disabled"
+  >
+  <fa-icon *ngIf="icon" [icon]="icon"></fa-icon>
   {{ text }}
 </button>

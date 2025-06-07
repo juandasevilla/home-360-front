@@ -53,10 +53,7 @@ export class DataTableComponent {
     return columnKey === 'actions';
   }
 
-  onEditClick(item: any, event: Event): void {
-    event.stopPropagation(); 
-    this.editClick.emit(item);
-  }
+  
 
 }
 

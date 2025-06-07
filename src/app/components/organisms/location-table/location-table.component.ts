@@ -50,7 +50,7 @@ export class LocationTableComponent {
     }
 
     onSearch(): void {
-    this.currentPage = 0; // Reset a la primera página al buscar
+    this.currentPage = 0; 
     this.loadCategories();
     }
     
@@ -60,8 +60,7 @@ export class LocationTableComponent {
     }
     
     onCategorySelect(location: Location): void {
-      console.log('Categoría seleccionada:', location);
-      // Aquí podrías implementar la edición o vista detalle
+      console.log('Categoría seleccionada:', location);    
     }
 }
 

@@ -53,12 +53,11 @@ export class RealStateFormComponent {
   private loadLocations(): void {
     this.locationService.getLocations(0, 50).subscribe({
       next: (response) => {
-        console.log('Ubicaciones cargadas:', response); // Log para depuración
+        console.log('Ubicaciones cargadas:', response); 
         if (response && response.content) {
           this.locations = response.content;
         } else {
           console.error('Formato de respuesta inesperado:', response);
-          // Si la respuesta no tiene el formato esperado, intentar usarla directamente
           this.locations = response.content;
         }
       },
@@ -71,12 +70,11 @@ export class RealStateFormComponent {
   private loadCategories(): void {
     this.categoryService.getCategories(0, 50).subscribe({
       next: (response) => {
-        console.log('Categorías cargadas:', response); // Log para depuración
+        console.log('Categorías cargadas:', response); 
         if (response && response.content) {
           this.categories = response.content;
         } else {
           console.error('Formato de respuesta inesperado:', response);
-          // Si la respuesta no tiene el formato esperado, intentar usarla directamente
           this.categories = response.content;
         }
       },

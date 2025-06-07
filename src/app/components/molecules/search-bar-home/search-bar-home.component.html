@@ -9,7 +9,7 @@
     <!-- Botón de filtros en esquina superior -->
     <div class="filters-toggle">
       <app-button
-        [text]="showAdvancedFilters ? 'Menos filtros' : 'Más filtros'"
+        [icon]="showAdvancedFilters ? faX : faFilter"
         [type]="'button'"
         [buttonStyle]="'secondary'"
         (buttonClick)="toggleAdvancedFilters()">

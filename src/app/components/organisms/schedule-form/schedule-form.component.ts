@@ -14,7 +14,7 @@ export class ScheduleFormComponent {
   isSubmitting = false;
   minScheduleDate: string;
   maxScheduleDate: string;
-  realStates: any[] = []; // Cambiar el tipo según tu modelo RealState
+  realStates: any[] = []; 
   
   
   constructor(
@@ -77,7 +77,7 @@ export class ScheduleFormComponent {
     return null;
   }
 
-  // ✅ NUEVO: Validador para fecha máxima (3 semanas)
+  // Validador para fecha máxima (3 semanas)
   private maxDateValidator(control: AbstractControl): ValidationErrors | null {
     if (!control.value) {
       return null; // Si está vacío, lo maneja 'required'

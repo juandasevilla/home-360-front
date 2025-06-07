@@ -33,7 +33,7 @@ const routes: Routes = [
     path: 'admin',
     component: AdminLayoutComponent,
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['ADMIN'] }, // Asegúrate de que el guardia de roles esté configurado para manejar esto 
+    data: { roles: ['ADMIN'] }, 
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },

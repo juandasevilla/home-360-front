@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SearchCriteria } from 'src/app/shared/models/SearchCriteria';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { faFilter, faX } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-search-bar-home',
@@ -8,6 +9,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./search-bar-home.component.scss']
 })
 export class SearchBarHomeComponent {
+  faFilter = faFilter;
+  faX = faX;
   @Input() categories: any[] = [];
   @Input() isLoading: boolean = false;
 
